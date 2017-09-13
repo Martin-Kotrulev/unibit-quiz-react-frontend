@@ -69,14 +69,11 @@ class Login extends Component {
 
   render () {
     return (
-      <div>
-        <h1>Login in to your account</h1>
-        <LoginForm
-          user={this.state.user}
-          onChange={this.handleFormChange.bind(this)}
-          error={this.state.error}
-          onSubmit={this.handleFormSubmit.bind(this)} />
-      </div>
+      <LoginForm
+        user={this.state.user}
+        onChange={this.handleFormChange.bind(this)}
+        error={this.state.error}
+        onSubmit={this.handleFormSubmit.bind(this)} />
     )
   }
 }

@@ -81,14 +81,11 @@ export default class Register extends Component {
 
   render () {
     return (
-      <div>
-        <h1>Register User</h1>
-        <RegisterForm
-          user={this.state.user}
-          onChange={this.handleFormChange.bind(this)}
-          error={this.state.error}
-          onSubmit={this.handleFormSubmit.bind(this)} />
-      </div>
+      <RegisterForm
+        user={this.state.user}
+        onChange={this.handleFormChange.bind(this)}
+        error={this.state.error}
+        onSubmit={this.handleFormSubmit.bind(this)} />
     )
   }
 }

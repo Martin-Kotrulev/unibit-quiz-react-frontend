@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Auth from '../../Auth'
-import { Navbar, Nav } from 'react-bootstrap'
+import { Navbar, Nav, NavDropdown, Glyphicon } from 'react-bootstrap'
 import RouteNavItem from './RouteNavItem'
 import BrandLink from './BrandLink'
 
@@ -12,26 +12,36 @@ export default class AppNavbar extends Component {
           <Navbar.Brand>
             <BrandLink to='/'>UniQuizBit</BrandLink>
           </Navbar.Brand>
+          <Navbar.Toggle />
         </Navbar.Header>
-        <Nav>
-          <RouteNavItem to='/'>Home</RouteNavItem>
-        </Nav>
-        {Auth.isAuthenticated() ? (
-          <Nav />
+        <Navbar.Collapse>
+          <Nav>
+            <RouteNavItem to='/'>Home</RouteNavItem>
+          </Nav>
+          {Auth.isAuthenticated() ? (
+            <Nav>
+              <RouteNavItem to='/groups'>Groups</RouteNavItem>
+              <RouteNavItem to='/groups'>Quizzes</RouteNavItem>
+            </Nav>
               ) : (
                 null
               )}
-        {Auth.isAuthenticated() ? (
-          <Nav pullRight>
-            <RouteNavItem to='/'><span className='glyphicon glyphicon-user' /> {Auth.getUser()}</RouteNavItem>
-            <RouteNavItem to='/users/logout'><span className='glyphicon glyphicon-log-in' /> Logout</RouteNavItem>
-          </Nav>
+          {Auth.isAuthenticated() ? (
+            <Nav pullRight>
+              <NavDropdown id='user-drop' title={Auth.getUser()} >
+                <RouteNavItem to='/groups/mine'>
+                  My Groups
+                </RouteNavItem>
+              </NavDropdown>
+              <RouteNavItem to='/users/logout'><Glyphicon glyph='log-in' /> Logout</RouteNavItem>
+            </Nav>
             ) : (
               <Nav pullRight>
-                <RouteNavItem to='/users/login'><span className='glyphicon glyphicon-user' /> Login</RouteNavItem>
-                <RouteNavItem to='/users/register'><span className='glyphicon glyphicon-log-in' /> Register</RouteNavItem>
+                <RouteNavItem to='/users/login'><Glyphicon glyph='user' /> Login</RouteNavItem>
+                <RouteNavItem to='/users/register'><Glyphicon glyph='log-in' /> Register</RouteNavItem>
               </Nav>
             )}
+        </Navbar.Collapse>
       </Navbar>
     )
   }

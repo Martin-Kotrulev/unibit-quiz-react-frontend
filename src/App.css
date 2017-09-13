@@ -1,24 +1,61 @@
-.App {
-  text-align: center;
+.navbar,
+.navbar-default {
+    background-image: linear-gradient(to bottom,#1E392A 0,#3CC47C 100%) !important; /* override background image gradient w/ flat color */
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
+.navbar-default .navbar-nav>li>a {
   color: white;
 }
 
-.App-intro {
-  font-size: large;
+.navbar-default .navbar-nav>li>a:hover {
+  color: #E9C893;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.navbar-default .navbar-brand {
+  color: #D9B310;
+  font-size: 3em;
+  text-shadow: 1px 1px 1px gray;
+}
+
+.navbar-default .navbar-brand:hover {
+  color: #D9B310;
+  text-shadow: 1px 3px 3px black;
+}
+
+html {
+  background-image: url('/questions.jpg');
+}
+
+h1, h2, h3, h4, h5, h6, label {
+  color: white;
+  text-shadow: 5px 5px 5px black;
+}
+
+button {
+  box-shadow: 5px 5px 5px black;
+}
+
+input {
+  box-shadow: 5px 5px 5px black!important;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: white;
+}
+
+button.navbar-toggle {
+  box-shadow: none;
+}
+
+.home p, .home h3 {
+  color: white;
+  text-shadow: 5px 5px 5px black;
+}
+
+.home h1 {
+  font-size: 5em;
+}
+
+.home p {
+  font-size: 1.2em;
 }

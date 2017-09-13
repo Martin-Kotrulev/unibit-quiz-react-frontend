@@ -3,7 +3,8 @@ import Input from '../common/Input'
 import { Form, Button, Col, Label } from 'react-bootstrap'
 
 const RegisterForm = (props) => (
-  <Col lg={6} lgOffset={3}>
+  <Col sm={6} smOffset={3} xs={8} xsOffset={2}>
+    <h1>Register User</h1>
     <Form onSubmit={props.onSubmit}>
       {props.error ? <h3><Label bsStyle='danger'>{props.error}</Label></h3> : null}
       <Input
@@ -26,7 +27,9 @@ const RegisterForm = (props) => (
         value={props.user.confirmPassword}
         onChange={props.onChange}
         label='Confirm password' />
-      <Button bsStyle='primary' type='submit'>Register</Button>
+      <Button
+        bsStyle='primary'
+        type='submit'>Register</Button>
     </Form>
   </Col>
 )

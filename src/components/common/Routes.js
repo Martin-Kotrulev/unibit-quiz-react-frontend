@@ -1,21 +1,20 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import Statistics from './Statistics'
+import Home from './Home'
 import Login from '../users/Login'
 import Register from '../users/Register'
 import PrivateRoute from './PrivateRoute'
 import Logout from '../users/Logout'
-import { Grid } from 'react-bootstrap'
+import UserGroups from '../users/UserGroups'
 
 const Routes = () => (
-  <Grid fluid>
-    <Switch>
-      <Route path='/' exact component={Statistics} />
-      <Route path='/users/login' component={Login} />
-      <Route path='/users/register' component={Register} />
-      <PrivateRoute path='/users/logout' component={Logout} />
-    </Switch>
-  </Grid>
+  <Switch>
+    <Route path='/' exact component={Home} />
+    <Route path='/users/login' component={Login} />
+    <Route path='/users/register' component={Register} />
+    <PrivateRoute path='/users/logout' component={Logout} />
+    <PrivateRoute path='/groups/mine' component={UserGroups} />
+  </Switch>
 )
 
 export default Routes
