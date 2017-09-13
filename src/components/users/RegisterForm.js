@@ -6,7 +6,7 @@ const RegisterForm = (props) => (
   <Col sm={6} smOffset={3} xs={8} xsOffset={2}>
     <h1>Register User</h1>
     <Form onSubmit={props.onSubmit}>
-      {props.error ? <h3><Label bsStyle='danger'>{props.error}</Label></h3> : null}
+      {props.error ? <h4><Label bsStyle='danger'>{props.error}</Label></h4> : null}
       <Input
         className='form-control'
         name='email'

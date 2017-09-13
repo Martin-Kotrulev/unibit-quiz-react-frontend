@@ -1,5 +1,5 @@
 import React from 'react'
-import { Pager, Col } from 'react-bootstrap'
+import { Button, Col, Glyphicon } from 'react-bootstrap'
 
 export default props => {
   const hasNext = props.listSize !== 0
@@ -7,16 +7,17 @@ export default props => {
 
   console.log(hasNext, hasPrevious)
   return (
-    <Pager>
-      <Pager.Item
-        disabled={!hasPrevious}
-        previous
-        onClick={props.onPrevious}>&larr; Previous</Pager.Item>
-      {' '}
-      <Pager.Item
-        disabled={!hasNext}
-        next
-        onClick={props.onNext}>Next &rarr;</Pager.Item>
-    </Pager>
+    <Col xs={12} className='custom-pager'>
+      <Col xs={6} xsOffset={0} sm={2} smOffset={4}>
+        <Button
+          disabled={!hasPrevious}
+          onClick={props.onPrevious}><Glyphicon glyph='circle-arrow-left' /> Prev Page</Button>
+      </Col>
+      <Col xs={6} xsOffset={0} sm={2} smOffset={0}>
+        <Button
+          disabled={!hasNext}
+          onClick={props.onNext}>Next Page <Glyphicon glyph='circle-arrow-right' /></Button>
+      </Col>
+    </Col>
   )
 }

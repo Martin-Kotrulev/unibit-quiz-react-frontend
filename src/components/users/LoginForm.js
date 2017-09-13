@@ -6,7 +6,7 @@ const LoginForm = (props) => (
   <Col sm={6} smOffset={3} xs={12}>
     <h1>Login in to your account</h1>
     <Form onSubmit={props.onSubmit}>
-      {props.error ? <h3><Label bsStyle='danger'>{props.error}</Label></h3> : null}
+      {props.error ? <h4><Label bsStyle='danger'>{props.error}</Label></h4> : null}
       <Input
         className='form-control'
         name='email'

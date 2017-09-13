@@ -4,16 +4,6 @@ import groupActions from '../actions/GroupActions'
 import GroupData from '../data/GroupData'
 
 class GroupStore extends EventEmitter {
-  registerUser (user) {
-    GroupData.registerUser(user)
-      .then(data => this.emit(this.eventTypes.USER_REGISTERED, data))
-  }
-
-  loginUser (user) {
-    GroupData.loginUser(user)
-      .then(data => this.emit(this.eventTypes.USER_LOGGED_IN, data))
-  }
-
   add (group) {
     GroupData.add(group)
       .then(data => this.emit(this.eventTypes.ADDED, data))
@@ -45,13 +35,13 @@ class GroupStore extends EventEmitter {
         this.add(action.payload)
         break
       case groupActions.types.ALL:
-        this.delete(action.payload)
-        break
-      case groupActions.types.ALL_QUIZZES:
         this.all(action.payload)
         break
-      case groupActions.types.DELETE:
+      case groupActions.types.ALL_QUIZZES:
         this.allQuizzes(action.payload)
+        break
+      case groupActions.types.DELETE:
+        this.delete(action.payload)
         break
       case groupActions.types.MINE:
         this.mineGroups(action.payload)

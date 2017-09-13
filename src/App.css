@@ -3,16 +3,16 @@
     background-image: linear-gradient(to bottom,#1E392A 0,#3CC47C 100%) !important; /* override background image gradient w/ flat color */
 }
 
-.navbar-default .navbar-nav>li>a {
-  color: white;
+a {
+  color: white!important;
 }
 
-.navbar-default .navbar-nav>li>a:hover {
-  color: #E9C893;
+a:hover {
+  color: #E9C893!important;
 }
 
 .navbar-default .navbar-brand {
-  color: #D9B310;
+  color: #D9B310!important;
   font-size: 3em;
   text-shadow: 1px 1px 1px gray;
 }
@@ -58,4 +58,56 @@ button.navbar-toggle {
 
 .home p {
   font-size: 1.2em;
+}
+
+.dropdown-toggle[aria-expanded='true'], .dropdown-menu, .dropdown-menu a:hover {
+  background-color: #3CC47C!important;
+}
+
+.pager a.button, .pager .disabled>a {
+  background-color: #3CC47C;
+  border-color: #3CC47C;
+  box-shadow: 5px 5px 5px black;
+}
+
+.pager .disabled>a {
+  color: gray!important;
+}
+
+h4 {
+  text-align: center;
+  text-shadow: none;
+}
+
+.nav a {
+  text-align: center;
+}
+
+.custom-pager {
+  margin-bottom: 1em;
+}
+
+.list-group-item-heading {
+  color: #D9B310;
+  text-shadow: 5px 5px 5px black;
+}
+
+.group-info {
+  color: white;
+  text-shadow: none;
+}
+
+.list-group-item {
+  margin: 1em 0;
+  background-color: rgba(60, 196, 124, 0.51);
+  border-radius: 0.5em;
+}
+
+.list-group-item:hover {
+  background-color: rgba(8, 99, 50, 0.51);
+}
+
+.add-group {
+  margin-top: -49px;
+  height: 83px;
 }

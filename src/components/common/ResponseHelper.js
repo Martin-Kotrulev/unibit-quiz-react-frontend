@@ -3,20 +3,22 @@ import Auth from '../../Auth'
 
 export default class ResponseHelper {
   static handleResponse (data, redirectPath) {
-    console.log(data)
+    console.log(data.result)
     if (data.success) {
       toastr.success(data.message)
 
-      if (data.result.token) {
-        Auth.authenticateUser(data.result.token)
-      }
+      if (data.result) {
+        if (data.result.token) {
+          Auth.authenticateUser(data.result.token)
+        }
 
-      if (data.result.user) {
-        Auth.saveUser(data.result.user)
-      }
+        if (data.result.user) {
+          Auth.saveUser(data.result.user)
+        }
 
-      if (data.result.expires) {
-        Auth.setTokenExpiration(data.result.expires)
+        if (data.result.expires) {
+          Auth.setTokenExpiration(data.result.expires)
+        }
       }
 
       if (redirectPath) {

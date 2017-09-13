@@ -5,7 +5,7 @@ import Login from '../users/Login'
 import Register from '../users/Register'
 import PrivateRoute from './PrivateRoute'
 import Logout from '../users/Logout'
-import UserGroups from '../users/UserGroups'
+import UserGroups from '../groups/UserGroups'
 
 const Routes = () => (
   <Switch>
