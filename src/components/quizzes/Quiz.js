@@ -1,19 +1,26 @@
 import React, { Component } from 'react'
 import { Col, Panel } from 'react-bootstrap'
 import quizActions from '../../actions/QuizActions'
+import quizStore from '../../stores/QuizStore'
+import toastr from 'toastr'
 
 export default class Quiz extends Component {
   constructor (props) {
     super(props)
 
     let quizId = props.match.params.quizId
-    this.state = {
-      questions: []
-    }
 
+    this.state = {
+      questions: [],
+      quizId
+    }
   }
 
   componentWillMount () {
+    
+  }
+
+  componentWillUnmount () {
     
   }
 

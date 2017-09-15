@@ -43,6 +43,7 @@ export default class UserQuizzes extends Component {
     this.handleFetchedQuizzes = this.handleFetchedQuizzes.bind(this)
     this.handleQuizAdding = this.handleQuizAdding.bind(this)
     this.handleQuizDeletion = this.handleQuizDeletion.bind(this)
+    this.handleQuizEntrance = this.handleQuizEntrance.bind(this)
 
     quizStore.on(
       quizStore.eventTypes.QUIZ_ADDED,
@@ -67,6 +68,11 @@ export default class UserQuizzes extends Component {
     groupStore.on(
       groupStore.eventTypes.ALL_QUIZZES_FETCHED,
       this.handleFetchedQuizzes
+    )
+
+    quizStore.on(
+      quizStore.eventTypes.ENTERED,
+      this.handleQuizEntrance
     )
   }
 
@@ -111,6 +117,22 @@ export default class UserQuizzes extends Component {
       groupStore.eventTypes.ALL_QUIZZES_FETCHED,
       this.handleFetchedQuizzes
     )
+
+    quizStore.removeListener(
+      quizStore.eventTypes.ENTERED,
+      this.handleQuizEntrance
+    )
+  }
+
+  handleQuizEntrance (response) {
+    console.log(response)
+
+    if (!response.success) {
+      toastr.error(response.message, null, {
+        'positionClass': 'toast-bottom-center'
+      })
+      this.props.history.replace('/quizzes/all')
+    }
   }
 
   componentWillMount () {
@@ -217,7 +239,7 @@ export default class UserQuizzes extends Component {
       let enter = window.confirm('Enter this quiz?')
 
       if (enter) {
-        this.props.history.push(`/quizzes/${quiz.id}/${quiz.title}`)
+        quizActions.enterQuiz(quiz.id)
       }
     }
   }

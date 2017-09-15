@@ -20,7 +20,7 @@ const Routes = () => (
     <PrivateRoute path='/users/logout' component={Logout} />
     <PrivateRoute path='/groups/:which' exact component={Groups} />
     <PrivateRoute path='/quizzes/:which' exact component={Quizzes} />
-    <PrivateRoute path='/quizzes/:id/:quizName' exact component={Quiz} />
+    <PrivateRoute path='/quizzes/:quizId/:quizName' exact component={Quiz} />
   </Switch>
 )
 

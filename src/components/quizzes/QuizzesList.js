@@ -10,7 +10,7 @@ export default props => {
     const renderQuizzes = props.quizzes.map((q, i) => {
       let tags = q.tags.map(t => '#'.concat(t)).join(' ')
       let id = q.id
-      let title = q.title
+      let name = q.name
       let own = q.creatorId === userId
       let itemCols = own ? 8 : 10
 
@@ -19,7 +19,7 @@ export default props => {
           {props.quizName ? <h4 className='center-h'>quizName</h4> : null}
           <Col xs={itemCols} xsOffset={0} smOffset={1}>
             <ListGroupItem
-              header={title}
+              header={name}
               onClick={e => props.onQuizClick(q)}>
               <p className='group-info'>
                 Created: <span className='created'>{new Date(q.createdOn).toDateString()} </span>

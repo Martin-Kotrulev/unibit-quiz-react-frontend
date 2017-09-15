@@ -26,7 +26,7 @@ export default class Groups extends Component {
       all,
       groups: [],
       page: 2,
-      hasMore: true,
+      hasMore: false,
       fetchMore: true,
       search: '',
       error: ''
@@ -79,7 +79,7 @@ export default class Groups extends Component {
     )
   }
 
-  componentDidMount () {
+  componentWillMount () {
     if (this.state.mine) {
       groupActions.mineGroups()
     } else {

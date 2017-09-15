@@ -27,7 +27,6 @@ const groupActions = {
     })
   },
   allQuizzes (groupId, page) {
-    console.log(groupId)
     Dispatcher.dispatch({
       type: this.types.ALL_QUIZZES,
       payload: { groupId, page }
