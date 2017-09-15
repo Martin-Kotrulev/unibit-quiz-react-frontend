@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import './App.css'
 import Navbar from './components/common/Navbar'
 import Routes from './components/common/Routes'
+import toastr from 'toastr'
+
+toastr.options.positionClass = 'toast-bottom-center'
 
 class App extends Component {
   render () {

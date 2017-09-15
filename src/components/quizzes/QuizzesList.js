@@ -12,12 +12,13 @@ export default props => {
       let id = q.id
       let name = q.name
       let own = q.creatorId === userId
-      let itemCols = own ? 8 : 10
+      let itemCols = own ? 8 : 12
+      let smItemCols = itemCols - 4
 
       return (
         <Col key={id} className='group-item'>
           {props.quizName ? <h4 className='center-h'>quizName</h4> : null}
-          <Col xs={itemCols} xsOffset={0} smOffset={1}>
+          <Col xs={itemCols} xsOffset={0} sm={own ? itemCols - 2 : smItemCols} smOffset={2}>
             <ListGroupItem
               header={name}
               onClick={e => props.onQuizClick(q)}>

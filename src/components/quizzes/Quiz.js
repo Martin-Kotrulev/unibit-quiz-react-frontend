@@ -7,8 +7,11 @@ import toastr from 'toastr'
 export default class Quiz extends Component {
   constructor (props) {
     super(props)
+    let quizId = parseInt(props.match.params.quizId)
 
-    let quizId = props.match.params.quizId
+    if (isNaN(quizId)) {
+      props.history.replace('/quizzes/all')
+    }
 
     this.state = {
       questions: [],

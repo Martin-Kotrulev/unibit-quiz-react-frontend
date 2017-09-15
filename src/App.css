@@ -150,3 +150,7 @@ button.list-group-item:hover, button.list-group-item:focus {
 .danger-a {
   color: red!important;
 }
+
+button[type='submit'] {
+  width: 83.59px;
+}

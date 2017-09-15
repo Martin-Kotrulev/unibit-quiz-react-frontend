@@ -13,14 +13,14 @@ import SearchForm from '../common/SearchForm'
 export default class Groups extends Component {
   constructor (props) {
     super(props)
-    let mine = props.match.params.which === 'mine'
+    console.log(props)
+    let mine = props.match.path.endsWith('mine')
     let all = !mine
 
     this.state = {
       group: {
         name: '',
-        tags: '',
-        ownerId: ''
+        tags: ''
       },
       mine,
       all,
@@ -94,6 +94,7 @@ export default class Groups extends Component {
   }
 
   handleGroupAdding (response) {
+    console.log(response)
     ResponseHelper.handleResponse.call(this, response)
 
     if (response.success) {
@@ -137,6 +138,10 @@ export default class Groups extends Component {
     let group = this.state.group
     let tags = group.tags.match(/#\w+/g) || []
 
+    if (!group.name) {
+      this.setState({error: 'Group name is required'})
+    }
+
     tags = tags
       .filter(tag => tag.startsWith('#'))
       .map(tag => tag.substring(1))
@@ -160,7 +165,7 @@ export default class Groups extends Component {
   }
 
   handleGroupClick (groupId, groupName) {
-    this.props.history.push(`/groups/${groupId}/quizzes?gn=${groupName}`)
+    this.props.history.push(`/groups/${groupId}/quizzes`)
   }
 
   handleDeleteClick (groupId) {

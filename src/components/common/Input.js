@@ -1,5 +1,5 @@
 import React from 'react'
-import { FormControl, FormGroup, Radio, Checkbox, Col } from 'react-bootstrap'
+import { FormControl, FormGroup, Radio, Checkbox, Col, ControlLabel } from 'react-bootstrap'
 
 const Input = (props) => {
   let type = props.type || 'text'
@@ -10,6 +10,7 @@ const Input = (props) => {
   if (!isRadioOrCheck) {
     component = (
       <FormControl
+        disabled={props.disabled}
         className={props.className}
         type={type}
         name={props.name}
@@ -21,19 +22,22 @@ const Input = (props) => {
   } else {
     component = isRadio ? (
       <Radio
+        disabled={props.disabled}
         type={type}
+        name={props.name}
         inline={props.inline}
         value={props.value}
         id={props.id}
-        onChange={props.onChange} />)
+        onChange={props.onChange} >{props.label}</Radio>)
       : (
         <Checkbox
+          disabled={props.disabled}
           type={type}
+          name={props.name}
           inline={props.inline}
           value={props.value}
           id={props.id}
-          onChange={props.onChange} />
-      )
+          onChange={props.onChange} >{props.label}</Checkbox>)
   }
 
   if (props.inlineLabel) {
@@ -48,10 +52,11 @@ const Input = (props) => {
 
   return (
     <FormGroup>
-      {props.label
-      ? label
-      : null }
+      {props.label && !isRadioOrCheck
+      ? <ControlLabel>{props.label}</ControlLabel>
+      : null}
       {component}
+      
     </FormGroup>
   )
 }

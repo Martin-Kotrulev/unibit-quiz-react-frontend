@@ -14,22 +14,25 @@ import SearchForm from '../common/SearchForm'
 import Auth from '../../Auth'
 import queryString from 'query-string'
 
-export default class UserQuizzes extends Component {
+export default class Quizzes extends Component {
   constructor (props) {
     super(props)
-    let groupId = props.match.params.groupId
-    let mine = props.match.params.which === 'mine'
+    let groupId = parseInt(props.match.params.groupId)
+    let mine = props.match.path.endsWith('mine')
     let all = !mine
-    let query = queryString.parse(props.location.search)
-    let groupName = query.gn
 
     this.state = {
       quiz: {
-        title: '',
-        tags: ''
+        name: '',
+        tags: '',
+        starts: '',
+        ends: '',
+        once: false,
+        password: '',
+        locked: false
       },
+      group: {},
       groupId,
-      groupName,
       all,
       mine,
       search: '',
@@ -81,14 +84,12 @@ export default class UserQuizzes extends Component {
     let mine = nextProps.match.params.which === 'mine'
     let all = !mine
     let query = queryString.parse(nextProps.location.search)
-    let groupName = query.gn
 
     this.setState({
       groupId,
       mine,
       all,
-      query,
-      groupName
+      query
     })
   }
 
@@ -124,17 +125,6 @@ export default class UserQuizzes extends Component {
     )
   }
 
-  handleQuizEntrance (response) {
-    console.log(response)
-
-    if (!response.success) {
-      toastr.error(response.message, null, {
-        'positionClass': 'toast-bottom-center'
-      })
-      this.props.history.replace('/quizzes/all')
-    }
-  }
-
   componentWillMount () {
     if (this.state.groupId) {
       groupActions.allQuizzes(this.state.groupId)
@@ -142,6 +132,15 @@ export default class UserQuizzes extends Component {
       quizActions.mine()
     } else {
       quizActions.all(this.state.search)
+    }
+  }
+
+  handleQuizEntrance (response) {
+    console.log(response)
+    if (response.success) {
+      toastr.success(response.message)
+    } else {
+      toastr.error(response.message)
     }
   }
 
@@ -158,12 +157,17 @@ export default class UserQuizzes extends Component {
       this.setState(prevState => {
         return {
           quiz: {
-            title: '',
+            name: '',
             tags: '',
-            page: 2,
-            fetchMore: false,
-            error: ''
+            starts: null,
+            ends: null,
+            once: false,
+            password: null,
+            locked: false
           },
+          page: 2,
+          error: '',
+          fetchMore: false,
           quizzes: [response.result, ...prevState.quizzes]
         }
       })
@@ -171,11 +175,17 @@ export default class UserQuizzes extends Component {
   }
 
   handleFetchedQuizzes (response) {
+    console.log(response)
+
     let hasMore
     let fetchedQuizzes = response.quizzes || response
-    let mine = response.creatorId === Auth.getUserId() || this.state.mine
+    let mine = (response.group &&
+      response.group.creatorId === Auth.getUserId()) ||
+      this.state.mine
 
-    this.setState({ mine, all: !mine })
+    console.log(mine)
+
+    this.setState({ mine, all: !mine, group: response.group })
 
     if (fetchedQuizzes) {
       hasMore = true
@@ -201,11 +211,16 @@ export default class UserQuizzes extends Component {
     let quiz = this.state.quiz
     let tags = quiz.tags.match(/#\w+/g) || []
 
+    if (!quiz.name) {
+      this.setState({error: 'Quiz name is required'})
+      return
+    }
+
     tags = tags
       .filter(tag => tag.startsWith('#'))
       .map(tag => tag.substring(1))
 
-    quiz = { title: quiz.title, tags: tags }
+    quiz = { name: quiz.name, tags: tags }
 
     if (this.state.groupId) {
       quiz.groupId = this.state.groupId
@@ -216,6 +231,7 @@ export default class UserQuizzes extends Component {
 
   onCreateQuizChange (event) {
     FormHelper.handleFormChange.call(this, event, 'quiz')
+    console.log(this.state.quiz.locked)
   }
 
   showMoreResults () {
@@ -254,7 +270,7 @@ export default class UserQuizzes extends Component {
   }
 
   handleEditClick (quiz) {
-    this.props.history.push(`/quizzes/${quiz.id}/${quiz.title}`)
+    this.props.history.push(`/quizzes/${quiz.id}`)
   }
 
   searchQuizzes () {
@@ -279,7 +295,7 @@ export default class UserQuizzes extends Component {
     let mainLabel = this.state.mine ? 'My quizzes' : 'All Quizzes'
     return (
       <Col xs={12}>
-        <h2 className='center-h'>{this.state.groupName ? `Quizzes for Group: '${this.state.groupName}'` : mainLabel}</h2>
+        <h2 className='center-h'>{this.state.groupId ? `Quizzes for Group: '${this.state.group.name || ''}'` : mainLabel}</h2>
         {this.state.mine
           ? <CreateQuizForm
             quiz={this.state.quiz}
@@ -288,7 +304,7 @@ export default class UserQuizzes extends Component {
             error={this.state.error} />
           : null
         }
-        {this.state.all
+        {this.state.all && !this.state.groupId
           ? <SearchForm
             placeholder={'Search By Title/Tag'}
             search={this.state.search}
