@@ -8,7 +8,8 @@ const quizActions = {
     ENTER: 'ENTER',
     ADD_PROGRESS: 'ADD_PROGRESS',
     ALL: 'ALL',
-    ALL_QUESTIONS_FOR_QUIZ: 'ALL_QUESTIONS_FOR_QUIZ'
+    ALL_QUESTIONS_FOR_QUIZ: 'ALL_QUESTIONS_FOR_QUIZ',
+    MINE: 'MINE'
   },
   addQuiz (quiz) {
     Dispatcher.dispatch({
@@ -26,6 +27,12 @@ const quizActions = {
     Dispatcher.dispatch({
       type: this.types.DELETE,
       payload: quizId
+    })
+  },
+  mine (page) {
+    Dispatcher.dispatch({
+      type: this.types.MINE,
+      payload: page
     })
   },
   enterQuiz (quizId) {

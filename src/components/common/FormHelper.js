@@ -10,8 +10,13 @@ export default class FormHelper {
       value = target.value
     }
 
-    const state = this.state[stateField]
-    state[field] = value
+    let state = this.state[stateField]
+
+    if (typeof state === 'object') {
+      state[field] = value
+    } else {
+      state = value
+    }
 
     this.setState({ [stateField]: state })
   }

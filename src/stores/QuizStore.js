@@ -1,11 +1,11 @@
 import { EventEmitter } from 'events'
 import Dispatcher from '../Dispatcher'
-import quizActions from '../actions/UserActions'
+import quizActions from '../actions/QuizActions'
 import QuizData from '../data/QuizData'
 
 class QuizStore extends EventEmitter {
   addQuiz (quiz) {
-    QuizData.addQuiz(quiz)
+    QuizData.add(quiz)
       .then(data => this.emit(this.eventTypes.QUIZ_ADDED, data))
   }
 
@@ -39,6 +39,11 @@ class QuizStore extends EventEmitter {
       .then(data => this.emit(this.eventTypes.ALL_QUESTIONS_FOR_QUIZ_FETCHED, data))
   }
 
+  mine (page) {
+    QuizData.mine(page)
+      .then(data => this.emit(this.eventTypes.MINE_FETCHED, data))
+  }
+
   handleAction (action) {
     switch (action.type) {
       case quizActions.types.ADD_QUIZ:
@@ -62,24 +67,28 @@ class QuizStore extends EventEmitter {
       case quizActions.types.ALL_QUESTIONS_FOR_QUIZ:
         this.allQuestionsForQuiz(action.payload)
         break
+      case quizActions.types.MINE:
+        this.mine(action.payload)
+        break
       default:
         break
     }
   }
 }
 
-let userStore = new QuizStore()
+let quizStore = new QuizStore()
 
-userStore.eventTypes = {
+quizStore.eventTypes = {
   QUIZ_ADDED: 'QUIZ_ADDED',
   QUESTION_TO_QUIZ_ADDED: 'QUESTION_TO_QUIZ_ADDED',
   DELETED: 'DELETED',
   ENTERED: 'ENTERED',
   PROGRESS_ADDED: 'PROGRESS_ADDED',
   ALL_FETCHED: 'ALL_FETCHED',
+  MINE_FETCHED: 'MINE_FETCHED',
   ALL_QUESTIONS_FOR_QUIZ_FETCHED: 'ALL_QUESTIONS_FOR_QUIZ_FETCHED'
 }
 
-Dispatcher.register(userStore.handleAction.bind(userStore))
+Dispatcher.register(quizStore.handleAction.bind(quizStore))
 
-export default userStore
+export default quizStore

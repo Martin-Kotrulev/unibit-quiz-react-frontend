@@ -26,10 +26,11 @@ const groupActions = {
       payload: { search, page }
     })
   },
-  allQuizzes (quizId, page) {
+  allQuizzes (groupId, page) {
+    console.log(groupId)
     Dispatcher.dispatch({
       type: this.types.ALL_QUIZZES,
-      payload: { quizId, page }
+      payload: { groupId, page }
     })
   },
   mineGroups (page) {

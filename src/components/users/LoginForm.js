@@ -9,10 +9,10 @@ const LoginForm = (props) => (
       {props.error ? <h4><Label bsStyle='danger'>{props.error}</Label></h4> : null}
       <Input
         className='form-control'
-        name='email'
-        value={props.user.email}
+        name='username'
+        value={props.user.username}
         onChange={props.onChange}
-        label='User E-mail' />
+        label='User Name' />
       <Input
         className='form-control'
         name='password'

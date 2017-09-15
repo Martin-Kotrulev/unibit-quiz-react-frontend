@@ -11,6 +11,7 @@ export default class Register extends Component {
 
     this.state = {
       user: {
+        username: '',
         email: '',
         password: '',
         confirmPassword: ''
@@ -54,6 +55,10 @@ export default class Register extends Component {
       error = 'User email is required'
     }
 
+    if (!user.username) {
+      error = 'User name is required'
+    }
+
     if (error) {
       this.setState({error})
       return false
@@ -71,6 +76,7 @@ export default class Register extends Component {
     if (this.validateForm()) {
       // Mutate user for register
       let user = {
+        username: this.state.user.username,
         email: this.state.user.email,
         password: this.state.user.password
       }

@@ -2,7 +2,7 @@ import React from 'react'
 import Input from '../common/Input'
 import { Button, Form, Col, Label, FormGroup } from 'react-bootstrap'
 
-const CreateGroupForm = (props) => (
+const CreateQuizForm = (props) => (
   <Form horizontal onSubmit={props.onSubmit}>
     {props.error ? <h4><Label bsStyle='danger'>{props.error}</Label></h4> : null}
     <FormGroup>
@@ -10,11 +10,11 @@ const CreateGroupForm = (props) => (
         <Input
           inline
           className='form-control'
-          name='name'
+          name='title'
           type='text'
-          value={props.group.name}
+          value={props.quiz.title}
           onChange={props.onChange}
-          placeholder='Enter Group Name' />
+          placeholder='Enter Quiz Name' />
       </Col>
       <Col xs={7} xsOffset={1} sm={5} smOffset={3}>
         <Input
@@ -22,7 +22,7 @@ const CreateGroupForm = (props) => (
           className='form-control'
           name='tags'
           type='text'
-          value={props.group.tags}
+          value={props.quiz.tags}
           onChange={props.onChange}
           placeholder='Add Tags With The "#" symbol.' />
       </Col>
@@ -36,4 +36,4 @@ const CreateGroupForm = (props) => (
   </Form>
 )
 
-export default CreateGroupForm
+export default CreateQuizForm

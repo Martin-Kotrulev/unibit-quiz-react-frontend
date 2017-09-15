@@ -13,17 +13,17 @@ class GroupData {
 
   static all (search, page) {
     page = page || 1
-    return Http.get(`${baseUrl}/all`, true)
+    return Http.get(`${baseUrl}/all?page=${page}&search=${search}`, true)
   }
 
-  static allQuizzes (quizId, page) {
+  static allQuizzes (groupId, page) {
     page = page || 1
-    return Http.get(`${baseUrl}/${quizId}/all`)
+    return Http.get(`${baseUrl}/${groupId}/quizzes/all`)
   }
 
   static mineGroups (page) {
     page = page || 1
-    return Http.get(`${baseUrl}/mine`, true)
+    return Http.get(`${baseUrl}/mine?page=${page}`, true)
   }
 }
 

@@ -1,8 +1,9 @@
 import React from 'react'
-import { Form, Input, Button, Col, FormGroup } from 'react-bootstrap'
+import { Form, Button, Col, FormGroup } from 'react-bootstrap'
+import Input from './Input'
 
 export default props => (
-  <Form horizontal onSubmit={props.onSubmit}>
+  <Form horizontal onSubmit={e => { e.preventDefault(); props.onSubmit() }}>
     <FormGroup>
       <Col xs={8} xsOffset={1} sm={5} smOffset={3}>
         <Input

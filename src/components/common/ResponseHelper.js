@@ -3,7 +3,6 @@ import Auth from '../../Auth'
 
 export default class ResponseHelper {
   static handleResponse (data, redirectPath) {
-    console.log(data.result)
     if (data.success) {
       toastr.success(data.message)
 
@@ -14,6 +13,10 @@ export default class ResponseHelper {
 
         if (data.result.user) {
           Auth.saveUser(data.result.user)
+        }
+
+        if (data.result.userId) {
+          Auth.saveUserId(data.result.userId)
         }
 
         if (data.result.expires) {

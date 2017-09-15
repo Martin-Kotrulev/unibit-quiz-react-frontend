@@ -7,6 +7,14 @@ class Auth {
     return window.localStorage.getItem('user')
   }
 
+  static saveUserId (userId) {
+    window.localStorage.setItem('userId', userId)
+  }
+
+  static getUserId () {
+    return window.localStorage.getItem('userId')
+  }
+
   static setTokenExpiration (expires) {
     window.localStorage.setItem('expires', expires)
   }
@@ -31,6 +39,7 @@ class Auth {
   static deauthenticateUser () {
     window.localStorage.removeItem('token')
     window.localStorage.removeItem('user')
+    window.localStorage.removeItem('userId')
   }
 
   static getToken () {

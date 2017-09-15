@@ -20,8 +20,8 @@ export default class AppNavbar extends Component {
           </Nav>
           {Auth.isAuthenticated() ? (
             <Nav>
-              <RouteNavItem to='/groups'>Groups</RouteNavItem>
-              <RouteNavItem to='/groups'>Quizzes</RouteNavItem>
+              <RouteNavItem to='/groups/all'>Groups</RouteNavItem>
+              <RouteNavItem to='/quizzes/all'>Quizzes</RouteNavItem>
             </Nav>
               ) : (
                 null
@@ -31,6 +31,9 @@ export default class AppNavbar extends Component {
               <NavDropdown id='user-drop' title={Auth.getUser()} >
                 <RouteNavItem to='/groups/mine'>
                   My Groups
+                </RouteNavItem>
+                <RouteNavItem to='/quizzes/mine'>
+                  My Quizzes
                 </RouteNavItem>
               </NavDropdown>
               <RouteNavItem to='/users/logout'><Glyphicon glyph='log-in' /> Logout</RouteNavItem>

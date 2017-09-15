@@ -25,11 +25,16 @@ class QuizData {
 
   static all (search, page) {
     page = page || 1
-    return Http.get(`${baseUrl}/all`)
+    return Http.get(`${baseUrl}/all?page=${page}&search=${search}`)
   }
 
   static allQuestionsForQuiz (quizId) {
     return Http.get(`${baseUrl}/${quizId}/questions/all`, true)
+  }
+
+  static mine (page) {
+    page = page || 1
+    return Http.get(`${baseUrl}/mine?page=${page}`, true)
   }
 }
 

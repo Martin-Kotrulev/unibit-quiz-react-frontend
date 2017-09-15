@@ -5,7 +5,7 @@ export default props => {
     return (<a
       href='more'
       onClick={e => { e.preventDefault(); props.onShowMore() }}>
-      <h4>Show More</h4>
+      <h4 className='show-more'>Show More</h4>
     </a>)
   }
   return null

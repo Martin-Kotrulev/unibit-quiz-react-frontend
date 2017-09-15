@@ -11,7 +11,7 @@ class Login extends Component {
 
     this.state = {
       user: {
-        email: '',
+        username: '',
         password: ''
       },
       error: ''
@@ -41,8 +41,8 @@ class Login extends Component {
       error = 'No password provided.'
     }
 
-    if (!user.email) {
-      error = 'No email provided.'
+    if (!user.username) {
+      error = 'No user name provided.'
     }
 
     if (error) {

@@ -19,8 +19,8 @@ class GroupStore extends EventEmitter {
       .then(data => this.emit(this.eventTypes.ALL_FETCHED, data))
   }
 
-  allQuizzes ({ quizId, page }) {
-    GroupData.allQuizzes(quizId, page)
+  allQuizzes ({ groupId, page }) {
+    GroupData.allQuizzes(groupId, page)
       .then(data => this.emit(this.eventTypes.ALL_QUIZZES_FETCHED, data))
   }
 

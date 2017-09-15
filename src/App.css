@@ -28,7 +28,7 @@ html {
 
 h1, h2, h3, h4, h5, h6, label {
   color: white;
-  text-shadow: 5px 5px 5px black;
+  text-shadow: 5px 3px 3px black;
 }
 
 button {
@@ -87,14 +87,34 @@ h4 {
   margin-bottom: 1em;
 }
 
-.list-group-item-heading {
-  color: #D9B310;
+h4.show-more {
   text-shadow: 5px 5px 5px black;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+
+.list-group-item-heading, h4.show-more:hover, .created, .by, .tags {
+  color: #D9B310!important;
+  text-shadow: 1px 1px 1px black;
+}
+
+.quiz-item .list-group-item-heading, .quiz-item .created, .quiz-item .by, .quiz-item .tags {
+  color: #3CC47C !important;
+  text-shadow: 1px 1px 1px black;
 }
 
 .group-info {
   color: white;
   text-shadow: none;
+}
+
+.groups-list, .quizzes-list {
+  margin-bottom: 1em;
+}
+
+.group-delete {
+  margin-top: 15px;
+  width: 83.59px;
 }
 
 .list-group-item {
@@ -103,11 +123,30 @@ h4 {
   border-radius: 0.5em;
 }
 
-.list-group-item:hover {
+button.list-group-item:hover, button.list-group-item:focus {
   background-color: rgba(8, 99, 50, 0.51);
+  cursor: pointer;
+}
+
+.quiz-item button.list-group-item:hover, .quiz-item button.list-group-item:focus {
+  background-color: rgba(217, 130, 16, 0.27);
+  cursor: pointer;
+}
+
+.quiz-item button.list-group-item, .quiz-item button.list-group-item {
+  background-color: rgba(217, 177, 16, 0.27);
+  cursor: pointer;
 }
 
 .add-group {
   margin-top: -49px;
   height: 83px;
+}
+
+.center-h {
+  text-align: center;
+}
+
+.danger-a {
+  color: red!important;
 }
