@@ -4,39 +4,45 @@ import Auth from './Auth'
 const BASE_URL = 'http://localhost:5000/api'
 
 class Http {
-  static get (url, secured = false) {
-    let axiosOptions = { headers: {} }
+  static withOptions (secured = false) {
+    let options = { headers: {} }
 
     if (secured) {
-      axiosOptions.headers['Authorization'] = `bearer ${Auth.getToken()}`
+      options.headers['Authorization'] = `bearer ${Auth.getToken()}`
     }
 
-    return axios.get(`${BASE_URL}${url}`, axiosOptions)
+    return options
+  }
+
+  static processResponse (axiosPromise) {
+    return axiosPromise
       .then(res => res.data)
       .catch(err => {
         if (err.response) {
           return err.response.data
         }
-
         window.alert(err)
       })
   }
 
+  static get (url, secured = false) {
+    return Http.processResponse(
+      axios.get(`${BASE_URL}${url}`, Http.withOptions(secured)))
+  }
+
   static post (url, data, secured = false) {
-    let axiosOptions = { headers: {} }
+    return Http.processResponse(
+      axios.post(`${BASE_URL}${url}`, data, Http.withOptions(secured)))
+  }
 
-    if (secured) {
-      axiosOptions.headers['Authorization'] = `bearer ${Auth.getToken()}`
-    }
+  static put (url, data, secured = false) {
+    return Http.processResponse(
+      axios.put(`${BASE_URL}${url}`, data, Http.withOptions(secured)))
+  }
 
-    return axios.post(`${BASE_URL}${url}`, data, axiosOptions)
-      .then(res => res.data)
-      .catch(err => {
-        if (err.response) {
-          return err.response.data
-        }
-        window.alert(err)
-      })
+  static delete (url, data, secured = false) {
+    return Http.processResponse(
+      axios.delete(`${BASE_URL}${url}`, data, Http.withOptions(secured)))
   }
 }
 

@@ -4,11 +4,15 @@ const baseUrl = '/groups'
 
 class GroupData {
   static add (group) {
-    return Http.post(`${baseUrl}/add`, group, true)
+    return Http.post(`${baseUrl}`, group, true)
   }
 
   static delete (groupId) {
-    return Http.post(`${baseUrl}/${groupId}/delete`, null, true)
+    return Http.delete(`${baseUrl}/${groupId}`, null, true)
+  }
+
+  static addQuizToGroup (groupId, quiz) {
+    return Http.post(`${baseUrl}/${groupId}/quizzes`, quiz, true)
   }
 
   static all (search, page) {
@@ -18,7 +22,7 @@ class GroupData {
 
   static allQuizzes (groupId, page) {
     page = page || 1
-    return Http.get(`${baseUrl}/${groupId}/quizzes/all`)
+    return Http.get(`${baseUrl}/${groupId}/quizzes`)
   }
 
   static mineGroups (page) {

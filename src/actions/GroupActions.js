@@ -6,7 +6,8 @@ const groupActions = {
     DELETE: 'DELETE',
     ALL: 'ALL',
     ALL_QUIZZES: 'ALL_QUIZZES',
-    MINE: 'MINE'
+    MINE: 'MINE',
+    ADD_QUIZ: 'ADD_QUIZ'
   },
   add (group) {
     Dispatcher.dispatch({
@@ -36,6 +37,12 @@ const groupActions = {
     Dispatcher.dispatch({
       type: this.types.MINE,
       payload: page
+    })
+  },
+  addQuizToGroup (groupId, quiz) {
+    Dispatcher.dispatch({
+      type: this.types.ADD_QUIZ,
+      payload: quiz
     })
   }
 }

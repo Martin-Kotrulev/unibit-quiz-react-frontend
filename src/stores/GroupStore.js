@@ -29,6 +29,11 @@ class GroupStore extends EventEmitter {
       .then(data => this.emit(this.eventTypes.MINE_FETCHED, data))
   }
 
+  addQuizToGroup ({ groupId, quiz }) {
+    GroupData.addQuizToGroup(groupId, quiz)
+      .then(data => this.emit(this.eventTypes.QUIZ_ADDED, data))
+  }
+
   handleAction (action) {
     switch (action.type) {
       case groupActions.types.ADD:
@@ -46,6 +51,9 @@ class GroupStore extends EventEmitter {
       case groupActions.types.MINE:
         this.mineGroups(action.payload)
         break
+      case groupActions.types.ADD_QUIZ:
+        this.addQuizToGroup(action.payload)
+        break
       default:
         break
     }
@@ -59,7 +67,8 @@ groupStore.eventTypes = {
   DELETED: 'DELETED',
   ALL_FETCHED: 'ALL_FETCHED',
   ALL_QUIZZES_FETCHED: 'ALL_QUIZZES_FETCHED',
-  MINE_FETCHED: 'MINE_FETCHED'
+  MINE_FETCHED: 'MINE_FETCHED',
+  QUIZ_ADDED: 'QUIZ_ADDED'
 }
 
 Dispatcher.register(groupStore.handleAction.bind(groupStore))

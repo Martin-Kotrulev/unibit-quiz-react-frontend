@@ -4,7 +4,7 @@ const baseUrl = '/quizzes'
 
 class QuizData {
   static add (quiz) {
-    return Http.post(`${baseUrl}/add`, quiz, true)
+    return Http.post(`${baseUrl}`, quiz, true)
   }
 
   static addQuestionToQuiz (quizId, question) {
@@ -12,20 +12,24 @@ class QuizData {
   }
 
   static delete (quizId) {
-    return Http.post(`${baseUrl}/${quizId}/delete`, null, true)
+    return Http.delete(`${baseUrl}/${quizId}`, null, true)
   }
 
   static enterQuiz (quizId) {
     return Http.post(`${baseUrl}/${quizId}/enter`, null, true)
   }
 
-  static addProgress (progress) {
-    return Http.post(`${baseUrl}/progress`, progress, true)
+  static addProgress (quizId, questionId, progress) {
+    return Http.post(`${baseUrl}/${quizId}/${questionId}`, progress, true)
   }
 
   static all (search, page) {
     page = page || 1
     return Http.get(`${baseUrl}/all?page=${page}&search=${search}`)
+  }
+
+  static updateQuizQuestions (quizId, questions) {
+    return Http.post(`${baseUrl}/${quizId}questions`, questions, true)
   }
 
   static allQuestionsForQuiz (quizId) {
