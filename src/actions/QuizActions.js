@@ -3,24 +3,18 @@ import Dispatcher from '../Dispatcher'
 const quizActions = {
   types: {
     ADD_QUIZ: 'ADD_QUIZ',
-    ADD_QUESTION_TO_QUIZ: 'ADD_QUESTION_TO_QUIZ',
     DELETE: 'DELETE',
     ENTER: 'ENTER',
     ADD_PROGRESS: 'ADD_PROGRESS',
     ALL: 'ALL',
     ALL_QUESTIONS_FOR_QUIZ: 'ALL_QUESTIONS_FOR_QUIZ',
-    MINE: 'MINE'
+    MINE: 'MINE',
+    UPDATE_QUIZ_QUESTIONS: 'UPDATE_QUIZ_QUESTIONS'
   },
   addQuiz (quiz) {
     Dispatcher.dispatch({
       type: this.types.ADD_QUIZ,
       payload: quiz
-    })
-  },
-  addQuestionToQuiz (quizId, question) {
-    Dispatcher.dispatch({
-      type: this.types.ADD_QUESTION_TO_QUIZ,
-      payload: { quizId, question }
     })
   },
   delete (quizId) {
@@ -41,10 +35,10 @@ const quizActions = {
       payload: quizId
     })
   },
-  addProgress (progress) {
+  addProgress (quizId, questionId, progressAnswer) {
     Dispatcher.dispatch({
       type: this.types.ADD_PROGRESS,
-      payload: progress
+      payload: { quizId, questionId, progressAnswer }
     })
   },
   all (search, page) {
@@ -57,6 +51,12 @@ const quizActions = {
     Dispatcher.dispatch({
       type: this.types.ALL_QUESTIONS_FOR_QUIZ,
       payload: quizId
+    })
+  },
+  updateQuizQuestions (quizId, questions) {
+    Dispatcher.dispatch({
+      type: this.types.UPDATE_QUIZ_QUESTIONS,
+      payload: { quizId, questions }
     })
   }
 }

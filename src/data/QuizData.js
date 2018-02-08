@@ -7,10 +7,6 @@ class QuizData {
     return Http.post(`${baseUrl}`, quiz, true)
   }
 
-  static addQuestionToQuiz (quizId, question) {
-    return Http.post(`${baseUrl}/${quizId}/questions/add`, question, true)
-  }
-
   static delete (quizId) {
     return Http.delete(`${baseUrl}/${quizId}`, null, true)
   }
@@ -19,26 +15,30 @@ class QuizData {
     return Http.post(`${baseUrl}/${quizId}/enter`, null, true)
   }
 
-  static addProgress (quizId, questionId, progress) {
-    return Http.post(`${baseUrl}/${quizId}/${questionId}`, progress, true)
+  static addProgress (quizId, questionId, progressAnswer) {
+    return Http.post(`${baseUrl}/${quizId}/${questionId}`, progressAnswer, true)
   }
 
   static all (search, page) {
     page = page || 1
-    return Http.get(`${baseUrl}/all?page=${page}&search=${search}`)
+    return Http.get(`${baseUrl}?page=${page}&search=${search}`)
   }
 
   static updateQuizQuestions (quizId, questions) {
-    return Http.post(`${baseUrl}/${quizId}questions`, questions, true)
+    return Http.post(`${baseUrl}/${quizId}/questions`, questions, true)
   }
 
   static allQuestionsForQuiz (quizId) {
-    return Http.get(`${baseUrl}/${quizId}/questions/all`, true)
+    return Http.get(`${baseUrl}/${quizId}/questions`, true)
   }
 
   static mine (page) {
     page = page || 1
     return Http.get(`${baseUrl}/mine?page=${page}`, true)
+  }
+
+  static score (quizId) {
+    return Http.post(`${baseUrl}/${quizId}score`)
   }
 }
 

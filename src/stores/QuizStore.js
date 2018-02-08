@@ -9,11 +9,6 @@ class QuizStore extends EventEmitter {
       .then(data => this.emit(this.eventTypes.QUIZ_ADDED, data))
   }
 
-  addQuestionToQuiz ({ quizId, question }) {
-    QuizData.addQuestionToQuiz(quizId, question)
-      .then(data => this.emit(this.eventTypes.QUESTION_TO_QUIZ_ADDED, data))
-  }
-
   delete (quizId) {
     QuizData.delete(quizId)
       .then(data => this.emit(this.eventTypes.DELETED, data))
@@ -24,8 +19,8 @@ class QuizStore extends EventEmitter {
       .then(data => this.emit(this.eventTypes.ENTERED, data))
   }
 
-  addProgress (progress) {
-    QuizData.addProgress(progress)
+  addProgress ({ quizId, questionId, progressAnswer }) {
+    QuizData.addProgress(quizId, questionId, progressAnswer)
       .then(data => this.emit(this.eventTypes.PROGRESS_ADDED, data))
   }
 
@@ -44,13 +39,15 @@ class QuizStore extends EventEmitter {
       .then(data => this.emit(this.eventTypes.MINE_FETCHED, data))
   }
 
+  updateQuizQuestions ({ quizId, questions }) {
+    QuizData.updateQuizQuestions(quizId, questions)
+      .than(data => this.emit(this.eventTypes.QUESTIONS_UPDATED, data))
+  }
+
   handleAction (action) {
     switch (action.type) {
       case quizActions.types.ADD_QUIZ:
         this.addQuiz(action.payload)
-        break
-      case quizActions.types.ADD_QUESTION_TO_QUIZ:
-        this.addQuestionToQuiz(action.payload)
         break
       case quizActions.types.DELETE:
         this.delete(action.payload)
@@ -70,6 +67,9 @@ class QuizStore extends EventEmitter {
       case quizActions.types.MINE:
         this.mine(action.payload)
         break
+      case quizActions.types.UPDATE_QUIZ_QUESTIONS:
+        this.updateQuizQuestions(action.payload)
+        break
       default:
         break
     }
@@ -80,13 +80,13 @@ let quizStore = new QuizStore()
 
 quizStore.eventTypes = {
   QUIZ_ADDED: 'QUIZ_ADDED',
-  QUESTION_TO_QUIZ_ADDED: 'QUESTION_TO_QUIZ_ADDED',
   DELETED: 'DELETED',
   ENTERED: 'ENTERED',
   PROGRESS_ADDED: 'PROGRESS_ADDED',
   ALL_FETCHED: 'ALL_FETCHED',
   MINE_FETCHED: 'MINE_FETCHED',
-  ALL_QUESTIONS_FOR_QUIZ_FETCHED: 'ALL_QUESTIONS_FOR_QUIZ_FETCHED'
+  ALL_QUESTIONS_FOR_QUIZ_FETCHED: 'ALL_QUESTIONS_FOR_QUIZ_FETCHED',
+  QUESTIONS_UPDATED: 'QUESTIONS_UPDATED'
 }
 
 Dispatcher.register(quizStore.handleAction.bind(quizStore))
