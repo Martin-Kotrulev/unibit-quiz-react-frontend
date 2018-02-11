@@ -40,11 +40,23 @@ export default class Quiz extends Component {
   }
 
   publishQuiz () {
-
+    console.log(this.state.quiz)
   }
 
   onQuizChange (event) {
     FormHelper.handleFormChange.call(this, event, 'quiz')
+  }
+
+  onStartDateChange (momentObject) {
+    if (typeof momentObject !== 'string') {
+      this.setState({ })
+    }
+  }
+
+  onEndDateChange (momentObject) {
+    if (typeof momentObject !== 'string') {
+
+    }
   }
 
   render () {
@@ -55,7 +67,9 @@ export default class Quiz extends Component {
           ? <QuizPublishForm
             quiz={this.state.quiz}
             onChange={this.onQuizChange.bind(this)}
-            onSubmit={this.publishQuiz.bind(this)} />
+            onSubmit={this.publishQuiz.bind(this)}
+            onStartDateChange={this.onStartDateChange.bind(this)}
+            onEndDateChange={this.onEndDateChange.bind(this)} />
           : null }
       </div>
     )
