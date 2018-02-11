@@ -1,6 +1,28 @@
+@font-face {
+  font-family: CabinSketch-Bold;
+  src: url('/CabinSketch-Bold.ttf');
+}
+
+@font-face {
+  font-family: CabinSketch-Regular;
+  src: url('/CabinSketch-Regular.ttf');
+}
+
+@font-face {
+  font-family: FrederickatheGreat-Regular;
+  src: url('/FrederickatheGreat-Regular.ttf');
+}
+
+@font-face {
+  font-family: Frijole-Regular;
+  src: url('/Frijole-Regular.ttf');
+}
+
+
 .navbar,
 .navbar-default {
-    background-image: linear-gradient(to bottom,#1E392A 0,#3CC47C 100%) !important; /* override background image gradient w/ flat color */
+    background-color: transparent !important;
+    border-color: transparent;
 }
 
 a {
@@ -11,24 +33,39 @@ a:hover {
   color: #E9C893!important;
 }
 
-.navbar-default .navbar-brand {
-  color: #D9B310!important;
-  font-size: 3em;
-  text-shadow: 1px 1px 1px gray;
+.brand {
+  list-style: none;
 }
 
-.navbar-default .navbar-brand:hover {
+.brand a {
+  color: #D9B310!important;
+  font-size: 2em;
+  font-family: Frijole-Regular !important;
+  display: inline;
+  text-decoration: none;
+}
+
+.brand a:hover {
   color: #D9B310;
   text-shadow: 1px 3px 3px black;
 }
 
 html {
-  background-image: url('/questions.jpg');
+  background-image: url('/chalkboard.jpg');
+  background-position: center center;
+  background-repeat: repeat-y;
+  background-color: black;
+  background-size: cover;
+  height: 100%;
+}
+
+body {
+  background-color: rgba(0, 0, 0, 0) !important;
 }
 
 h1, h2, h3, h4, h5, h6, label {
   color: white;
-  text-shadow: 5px 3px 3px black;
+  
 }
 
 button {
@@ -47,13 +84,14 @@ button.navbar-toggle {
   box-shadow: none;
 }
 
-.home p, .home h3 {
+.home p, .home h3, .home h2, .navbar-default a {
   color: white;
-  text-shadow: 5px 5px 5px black;
+  font-family: CabinSketch-Bold;
 }
 
 .home h1 {
   font-size: 5em;
+  font-family: Frijole-Regular;
 }
 
 .home p {
@@ -61,7 +99,12 @@ button.navbar-toggle {
 }
 
 .dropdown-toggle[aria-expanded='true'], .dropdown-menu, .dropdown-menu a:hover {
-  background-color: #3CC47C!important;
+  background-color: transparent!important;
+}
+
+.dropdown-menu {
+  border: none;
+  box-shadow: none;
 }
 
 .pager a.button, .pager .disabled>a {
@@ -87,13 +130,14 @@ h4 {
   margin-bottom: 1em;
 }
 
-h4.show-more {
+a.show-more {
   text-shadow: 5px 5px 5px black;
   margin-bottom: 2em;
   margin-top: 2em;
+  text-align: center;
 }
 
-.list-group-item-heading, h4.show-more:hover, .created, .by, .tags {
+.list-group-item-heading, a.show-more:hover, .created, .by, .tags {
   color: #D9B310!important;
   text-shadow: 1px 1px 1px black;
 }
@@ -138,7 +182,7 @@ button.list-group-item:hover, button.list-group-item:focus {
   cursor: pointer;
 }
 
-.add-group {
+.create-btn {
   margin-top: -49px;
   height: 83px;
 }
@@ -153,4 +197,8 @@ button.list-group-item:hover, button.list-group-item:focus {
 
 button[type='submit'] {
   width: 83.59px;
+}
+
+.list-group-item-text {
+  color: white;
 }

@@ -8,7 +8,7 @@ class QuizData {
   }
 
   static delete (quizId) {
-    return Http.delete(`${baseUrl}/${quizId}`, null, true)
+    return Http.delete(`${baseUrl}/${quizId}`, true)
   }
 
   static enterQuiz (quizId) {

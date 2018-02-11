@@ -49,7 +49,7 @@ class QuizStore extends EventEmitter {
       case quizActions.types.ADD_QUIZ:
         this.addQuiz(action.payload)
         break
-      case quizActions.types.DELETE:
+      case quizActions.types.DELETE_QUIZ:
         this.delete(action.payload)
         break
       case quizActions.types.ENTER:

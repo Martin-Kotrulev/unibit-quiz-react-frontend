@@ -20,10 +20,9 @@ export default props => {
             <ListGroupItem
               header={g.name}
               onClick={e => props.onGroupClick(id, name)}>
-              <p className='group-info'>
                 Created: <span className='created'>{new Date(g.createdOn).toDateString()} </span>
-                By:<span className='by'> {g.creatorName}</span></p>
-              <p className='group-info'>Tags: <span className='tags'>{tags}</span></p>
+                By:<span className='by'> {g.creatorName}</span><br />
+                Tags: <span className='tags'>{tags}</span>
             </ListGroupItem>
           </Col>
           {showDelete

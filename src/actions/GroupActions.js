@@ -3,11 +3,11 @@ import Dispatcher from '../Dispatcher'
 const groupActions = {
   types: {
     ADD: 'ADD',
-    DELETE: 'DELETE',
+    DELETE_GROUP: 'DELETE_GROUP',
     ALL: 'ALL',
     ALL_QUIZZES: 'ALL_QUIZZES',
     MINE: 'MINE',
-    ADD_QUIZ: 'ADD_QUIZ'
+    ADD_GROUP_QUIZ: 'ADD_GROUP_QUIZ'
   },
   add (group) {
     Dispatcher.dispatch({
@@ -17,7 +17,7 @@ const groupActions = {
   },
   delete (groupId) {
     Dispatcher.dispatch({
-      type: this.types.DELETE,
+      type: this.types.DELETE_GROUP,
       payload: groupId
     })
   },
@@ -41,7 +41,7 @@ const groupActions = {
   },
   addQuizToGroup (groupId, quiz) {
     Dispatcher.dispatch({
-      type: this.types.ADD_QUIZ,
+      type: this.types.ADD_GROUP_QUIZ,
       payload: quiz
     })
   }

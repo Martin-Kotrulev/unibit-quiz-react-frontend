@@ -45,13 +45,13 @@ class GroupStore extends EventEmitter {
       case groupActions.types.ALL_QUIZZES:
         this.allQuizzes(action.payload)
         break
-      case groupActions.types.DELETE:
+      case groupActions.types.DELETE_GROUP:
         this.delete(action.payload)
         break
       case groupActions.types.MINE:
         this.mineGroups(action.payload)
         break
-      case groupActions.types.ADD_QUIZ:
+      case groupActions.types.ADD_GROUP_QUIZ:
         this.addQuizToGroup(action.payload)
         break
       default:

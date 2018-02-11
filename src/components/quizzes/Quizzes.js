@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import ShowMore from '../common/ShowMore'
 import { Col } from 'react-bootstrap'
+import toastr from 'toastr'
+import queryString from 'query-string'
+
 import quizActions from '../../actions/QuizActions'
 import quizStore from '../../stores/QuizStore'
 import groupActions from '../../actions/GroupActions'
@@ -9,15 +12,13 @@ import CreateQuizForm from './CreateQuizForm'
 import QuizzesList from './QuizzesList'
 import FormHelper from '../common/FormHelper'
 import ResponseHelper from '../common/ResponseHelper'
-import toastr from 'toastr'
 import SearchForm from '../common/SearchForm'
 import Auth from '../../Auth'
-import queryString from 'query-string'
 
 export default class Quizzes extends Component {
   constructor (props) {
     super(props)
-    let groupId = parseInt(props.match.params.groupId)
+    let groupId = parseInt(props.match.params.groupId, 10)
     let mine = props.match.path.endsWith('mine')
     let all = !mine
 
@@ -80,10 +81,13 @@ export default class Quizzes extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    console.log('props', nextProps)
     let groupId = nextProps.match.params.groupId
-    let mine = nextProps.match.params.which === 'mine'
+    let mine = nextProps.match.path.endsWith('mine')
     let all = !mine
     let query = queryString.parse(nextProps.location.search)
+
+    console.log('mine', mine)
 
     this.setState({
       groupId,
@@ -175,35 +179,27 @@ export default class Quizzes extends Component {
   }
 
   handleFetchedQuizzes (response) {
-    console.log(response)
-
-    let hasMore
-    let fetchedQuizzes = response.quizzes || response
+    let hasMore = false
+    let fetchedQuizzes = response.result || response
     let mine = (response.group &&
       response.group.creatorId === Auth.getUserId()) ||
       this.state.mine
 
-    console.log(mine)
-
     this.setState({ mine, all: !mine, group: response.group })
 
     if (fetchedQuizzes) {
-      hasMore = true
+      if (fetchedQuizzes.length === 10) {
+        hasMore = true
+      }
 
       if (this.state.fetchMore) {
         this.setState(prevState => {
-          return { quizzes: [...prevState.quizzes, ...fetchedQuizzes] }
+          return { quizzes: [...prevState.quizzes, ...fetchedQuizzes], hasMore }
         })
       } else {
-        this.setState({ quizzes: fetchedQuizzes })
+        this.setState({ quizzes: fetchedQuizzes, hasMore })
       }
     }
-
-    if (!fetchedQuizzes || fetchedQuizzes.length < 10) {
-      hasMore = false
-    }
-
-    this.setState({ hasMore })
   }
 
   createQuiz (event) {
@@ -223,10 +219,10 @@ export default class Quizzes extends Component {
     quiz = { name: quiz.name, tags: tags }
 
     if (this.state.groupId) {
-      quiz.groupId = this.state.groupId
+      groupActions.addQuizToGroup(this.state.groupId, quiz)
+    } else {
+      quizActions.addQuiz(quiz)
     }
-
-    quizActions.addQuiz(quiz)
   }
 
   onCreateQuizChange (event) {
@@ -270,7 +266,10 @@ export default class Quizzes extends Component {
   }
 
   handleEditClick (quiz) {
-    this.props.history.push(`/quizzes/${quiz.id}`)
+    this.props.history.push({
+      pathname: `/quizzes/${quiz.id}`,
+      state: { quiz }
+    })
   }
 
   searchQuizzes () {

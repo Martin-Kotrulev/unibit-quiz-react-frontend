@@ -56,7 +56,6 @@ const Input = (props) => {
       ? <ControlLabel>{props.label}</ControlLabel>
       : null}
       {component}
-      
     </FormGroup>
   )
 }

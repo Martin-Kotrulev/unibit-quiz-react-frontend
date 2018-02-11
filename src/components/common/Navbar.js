@@ -1,23 +1,21 @@
 import React, { Component } from 'react'
 import Auth from '../../Auth'
-import { Navbar, Nav, NavDropdown, Glyphicon } from 'react-bootstrap'
+import { Navbar, Nav, NavDropdown, Glyphicon, NavbarBrand } from 'react-bootstrap'
 import RouteNavItem from './RouteNavItem'
-import BrandLink from './BrandLink'
 
 export default class AppNavbar extends Component {
   render () {
     return (
       <Navbar>
         <Navbar.Header>
-          <Navbar.Brand>
-            <BrandLink to='/'>UniQuizBit</BrandLink>
-          </Navbar.Brand>
+          <NavbarBrand>
+            <RouteNavItem
+              className='brand'
+              to='/'>UniQuizBit</RouteNavItem>
+          </NavbarBrand>
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
-          <Nav>
-            <RouteNavItem to='/'>Home</RouteNavItem>
-          </Nav>
           {Auth.isAuthenticated() ? (
             <Nav>
               <RouteNavItem to='/groups/all'>Groups</RouteNavItem>

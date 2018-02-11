@@ -8,7 +8,7 @@ class GroupData {
   }
 
   static delete (groupId) {
-    return Http.delete(`${baseUrl}/${groupId}`, null, true)
+    return Http.delete(`${baseUrl}/${groupId}`, true)
   }
 
   static addQuizToGroup (groupId, quiz) {
@@ -17,7 +17,7 @@ class GroupData {
 
   static all (search, page) {
     page = page || 1
-    return Http.get(`${baseUrl}/all?page=${page}&search=${search}`, true)
+    return Http.get(`${baseUrl}?page=${page}&search=${search}`, true)
   }
 
   static allQuizzes (groupId, page) {

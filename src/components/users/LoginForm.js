@@ -3,7 +3,7 @@ import Input from '../common/Input'
 import { Button, Form, Col, Label } from 'react-bootstrap'
 
 const LoginForm = (props) => (
-  <Col sm={6} smOffset={3} xs={12}>
+  <Col sm={6} smOffset={3} xs={8} xsOffset={2}>
     <h1>Login in to your account</h1>
     <Form onSubmit={props.onSubmit}>
       {props.error ? <h4><Label bsStyle='danger'>{props.error}</Label></h4> : null}

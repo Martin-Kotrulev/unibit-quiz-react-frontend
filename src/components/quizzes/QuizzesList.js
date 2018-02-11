@@ -22,10 +22,9 @@ export default props => {
             <ListGroupItem
               header={name}
               onClick={e => props.onQuizClick(q)}>
-              <p className='group-info'>
                 Created: <span className='created'>{new Date(q.createdOn).toDateString()} </span>
-                By:<span className='by'> {q.creatorName}</span></p>
-              <p className='group-info'>Tags: <span className='tags'>{tags}</span></p>
+                By:<span className='by'> {q.creatorName}</span><br />
+                Tags: <span className='tags'>{tags}</span>
             </ListGroupItem>
           </Col>
           {own

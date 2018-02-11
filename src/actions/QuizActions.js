@@ -3,7 +3,7 @@ import Dispatcher from '../Dispatcher'
 const quizActions = {
   types: {
     ADD_QUIZ: 'ADD_QUIZ',
-    DELETE: 'DELETE',
+    DELETE_QUIZ: 'DELETE_QUIZ',
     ENTER: 'ENTER',
     ADD_PROGRESS: 'ADD_PROGRESS',
     ALL: 'ALL',
@@ -19,7 +19,7 @@ const quizActions = {
   },
   delete (quizId) {
     Dispatcher.dispatch({
-      type: this.types.DELETE,
+      type: this.types.DELETE_QUIZ,
       payload: quizId
     })
   },

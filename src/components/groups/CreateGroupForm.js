@@ -9,7 +9,6 @@ const CreateGroupForm = (props) => (
       <Col xs={7} xsOffset={1} sm={5} smOffset={3}>
         <Input
           inline
-          className='form-control'
           name='name'
           type='text'
           value={props.group.name}
@@ -19,7 +18,6 @@ const CreateGroupForm = (props) => (
       <Col xs={7} xsOffset={1} sm={5} smOffset={3}>
         <Input
           inline
-          className='form-control'
           name='tags'
           type='text'
           value={props.group.tags}
@@ -29,7 +27,7 @@ const CreateGroupForm = (props) => (
       <Col xs={2} xsOffset={0}>
         <Button
           bsStyle='primary'
-          className='add-group'
+          className='create-btn'
           type='submit'>Create</Button>
       </Col>
     </FormGroup>

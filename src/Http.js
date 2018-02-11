@@ -40,9 +40,9 @@ class Http {
       axios.put(`${BASE_URL}${url}`, data, Http.withOptions(secured)))
   }
 
-  static delete (url, data, secured = false) {
+  static delete (url, secured = false) {
     return Http.processResponse(
-      axios.delete(`${BASE_URL}${url}`, data, Http.withOptions(secured)))
+      axios.delete(`${BASE_URL}${url}`, Http.withOptions(secured)))
   }
 }
 
