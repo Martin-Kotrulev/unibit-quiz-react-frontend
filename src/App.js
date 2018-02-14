@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './App.css'
-import './Datetime.css'
 import Navbar from './components/common/Navbar'
 import Routes from './components/common/Routes'
 import toastr from 'toastr'

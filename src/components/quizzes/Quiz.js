@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import toastr from 'toastr'
 
-import QuizPublishForm from '../quizzes/QuizPublishForm'
+import QuizForm from '../quizzes/QuizForm'
 import quizActions from '../../actions/QuizActions'
 import quizStore from '../../stores/QuizStore'
 import FormHelper from '../common/FormHelper'
@@ -15,7 +15,17 @@ export default class Quiz extends Component {
     this.state = {
       questions: [],
       quizId,
-      quiz
+      quiz,
+      error: '',
+      questionError: '',
+      answerError: '',
+      startMoment: null,
+      endMoment: null,
+      newQuestion: {
+        value: '',
+        isMultiselect: 'false',
+        quizId: ''
+      }
     }
   }
 
@@ -31,8 +41,6 @@ export default class Quiz extends Component {
         }
       }
     }
-
-    console.log(this.state.quiz)
   }
 
   componentWillUnmount () {
@@ -40,22 +48,76 @@ export default class Quiz extends Component {
   }
 
   publishQuiz () {
-    console.log(this.state.quiz)
+    console.log('publish')
+    let {error, quiz, startMoment, endMoment} = this.state
+
+    error = ''
+    if (quiz.locked && !quiz.password) {
+      error = 'Password cannot be empty'
+    } else if (quiz.once && (!startMoment || !endMoment)) {
+      error = 'Start and End Dates are required'
+    } else if (quiz.once && startMoment.isAfter(endMoment)) {
+      error = 'End date must be after Start date'
+    }
+
+    if (error) {
+      
+    } else {
+
+    }
+
+    this.setState({error})
+  }
+
+  saveQuestions () {
+
   }
 
   onQuizChange (event) {
     FormHelper.handleFormChange.call(this, event, 'quiz')
   }
 
-  onStartDateChange (momentObject) {
+  onNewQuestionChange (event) {
+    FormHelper.handleFormChange.call(this, event, 'newQuestion')
+  }
+
+  onAddQuestion () {
+    let questionError = ''
+
+    if (!this.state.newQuestion.value) {
+      questionError = 'You must enter question text'
+      this.setState({questionError})
+      return
+    }
+
+    this.setState(prevState => {
+      return {
+        questions: [...prevState.questions, this.state.newQuestion],
+        questionError,
+        newQuestion: {
+          value: '',
+          isMultiselect: 'false',
+          quizId: ''
+        }
+      }
+    })
+  }
+
+  onStartDateChange (startMoment) {
     if (typeof momentObject !== 'string') {
-      this.setState({ })
+      let { quiz } = this.state
+      quiz.starts = startMoment.toString()
+
+      this.setState({ startMoment, quiz })
     }
   }
 
-  onEndDateChange (momentObject) {
+  onEndDateChange (endMoment) {
     if (typeof momentObject !== 'string') {
+      let { quiz } = this.state
+      quiz.ends = endMoment.toString()
 
+      this.setState({ endMoment, quiz })
     }
   }
 
@@ -64,10 +126,18 @@ export default class Quiz extends Component {
       <div>
         <h1 className='center-h'>{this.state.quiz.name}</h1>
         {this.state.quiz
-          ? <QuizPublishForm
+          ? <QuizForm
+            error={this.state.error}
+            questionError={this.state.questionError}
+            answerError={this.state.questionError}
             quiz={this.state.quiz}
+            newQuestion={this.state.newQuestion}
+            questions={this.state.questions}
+            onAddQuestion={this.onAddQuestion.bind(this)}
+            onNewQuestionChange={this.onNewQuestionChange.bind(this)}
             onChange={this.onQuizChange.bind(this)}
-            onSubmit={this.publishQuiz.bind(this)}
+            onPublish={this.publishQuiz.bind(this)}
+            onSave={this.saveQuestions.bind(this)}
             onStartDateChange={this.onStartDateChange.bind(this)}
             onEndDateChange={this.onEndDateChange.bind(this)} />
           : null }

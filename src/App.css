@@ -68,12 +68,8 @@ h1, h2, h3, h4, h5, h6, label {
   
 }
 
-button {
-  box-shadow: 5px 5px 5px black;
-}
-
-input {
-  box-shadow: 5px 5px 5px black!important;
+button, label {
+  font-family: CabinSketch-Bold;
 }
 
 .navbar-default .navbar-toggle .icon-bar {
@@ -84,7 +80,7 @@ button.navbar-toggle {
   box-shadow: none;
 }
 
-.home p, .home h3, .home h2, .navbar-default a {
+.home p, .home h3, .home h2, .navbar-default a, .question-h {
   color: white;
   font-family: CabinSketch-Bold;
 }
@@ -189,6 +185,7 @@ button.list-group-item:hover, button.list-group-item:focus {
 
 .center-h {
   text-align: center;
+  font-family: FrederickatheGreat-Regular;
 }
 
 .danger-a {
@@ -201,4 +198,10 @@ button[type='submit'] {
 
 .list-group-item-text {
   color: white;
+}
+
+.question-input {
+  padding-top: 1rem;
+  margin-top: 1rem;
+  border-top: 0.1rem solid white;
 }
