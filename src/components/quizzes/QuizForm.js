@@ -2,19 +2,36 @@ import React from 'react'
 import { Col, Button, Label } from 'react-bootstrap'
 
 import Input from '../common/Input'
+import AnswerForm from '../answers/AnswerForm'
 
 import 'react-datepicker/dist/react-datepicker-cssmodules.css'
 
 export default props => {
-  const questions = props.questions.map((q, i) => (
-    <h3 className='question-h' key={i}>{i + 1}. {q.value}</h3>
-  ))
+  const questions = props.questions.map((q, qi) => {
+    const answers = q.answers.map((a, ai) => (
+      <Input
+        key={a.id || ai}
+        name='isChecked'
+        type={q.isMultiselect ? 'checkbox' : 'radio'}
+        value={a.isChecked}
+        label={a.value}
+        onChange={props.onAnswerChange} />
+    ))
+
+    return (
+      <Col xs={10} xsOffset={1} key={q.id || qi}>
+        <h3 className='question-h' key={q.id || qi}>{qi + 1}. {q.value}</h3>
+        <AnswerForm onAddAnswer={props.onAddAnswer} questionIndex={qi} />
+      </Col>
+    )
+  })
 
   return (
     <Col xs={12} sm={8} smOffset={2}>
       {props.error ? <h4><Label bsStyle='danger'> {props.error} </Label></h4> : null}
-      <Col xs={6} xsPush={2}>
+      <Col xs={6}>
         <Button
+          className='pull-right'
           bsStyle='primary'
           onClick={props.onSave}>Save Questions</Button>
       </Col>
@@ -35,12 +52,13 @@ export default props => {
           value={props.newQuestion.value}
           onChange={props.onNewQuestionChange} />
       </Col>
-      <Col xs={4}>
+      <Col xs={6}>
         <Button
+          className='pull-right'
           bsStyle='primary'
           onClick={props.onAddQuestion}>Add Question</Button>
       </Col>
-      <Col xs={4}>
+      <Col xs={6}>
         <Input
           inline
           onChange={props.onNewQuestionChange}

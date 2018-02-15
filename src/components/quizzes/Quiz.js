@@ -24,7 +24,8 @@ export default class Quiz extends Component {
       newQuestion: {
         value: '',
         isMultiselect: 'false',
-        quizId: ''
+        quizId: '',
+        answers: []
       }
     }
   }
@@ -61,7 +62,7 @@ export default class Quiz extends Component {
     }
 
     if (error) {
-      
+
     } else {
 
     }
@@ -90,6 +91,9 @@ export default class Quiz extends Component {
       return
     }
 
+    this.state.newQuestion.quizId = this.state.quizId
+    console.log(this.state.newQuestion.quizId)
+
     this.setState(prevState => {
       return {
         questions: [...prevState.questions, this.state.newQuestion],
@@ -97,10 +101,22 @@ export default class Quiz extends Component {
         newQuestion: {
           value: '',
           isMultiselect: 'false',
-          quizId: ''
+          quizId: '',
+          answers: []
         }
       }
     })
+  }
+
+  onAnswerChange (questionId, answerId, event) {
+    console.log(questionId)
+    console.log(answerId)
+    console.log(event)
+  }
+
+  onAddAnswer (answer, questionIndex) {
+    console.log(answer)
+    console.log(questionIndex)
   }
 
   onStartDateChange (startMoment) {
@@ -135,6 +151,8 @@ export default class Quiz extends Component {
             questions={this.state.questions}
             onAddQuestion={this.onAddQuestion.bind(this)}
             onNewQuestionChange={this.onNewQuestionChange.bind(this)}
+            onAnswerChange={this.onAnswerChange.bind(this)}
+            onAddAnswer={this.onAddAnswer.bind(this)}
             onChange={this.onQuizChange.bind(this)}
             onPublish={this.publishQuiz.bind(this)}
             onSave={this.saveQuestions.bind(this)}
