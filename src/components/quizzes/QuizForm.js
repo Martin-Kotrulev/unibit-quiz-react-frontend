@@ -9,18 +9,21 @@ import 'react-datepicker/dist/react-datepicker-cssmodules.css'
 export default props => {
   const questions = props.questions.map((q, qi) => {
     const answers = q.answers.map((a, ai) => (
-      <Input
-        key={a.id || ai}
-        name='isChecked'
-        type={q.isMultiselect ? 'checkbox' : 'radio'}
-        value={a.isChecked}
-        label={a.value}
-        onChange={props.onAnswerChange} />
+      <div key={a.id || ai}>
+        <span className='answer-letter'>{a.letter}. </span>
+        <Input
+          name={props.userOwnQuiz ? 'isRight' : 'isChecked'}
+          type={q.isMultiselect ? 'checkbox' : 'radio'}
+          value={props.userOwnQuiz ? a.isChecked : a.isRight}
+          label={a.value}
+          onChange={(e) => props.onAnswerChange(qi, ai, e)} />
+      </div>
     ))
 
     return (
       <Col xs={10} xsOffset={1} key={q.id || qi}>
         <h3 className='question-h' key={q.id || qi}>{qi + 1}. {q.value}</h3>
+        {answers}
         <AnswerForm onAddAnswer={props.onAddAnswer} questionIndex={qi} />
       </Col>
     )

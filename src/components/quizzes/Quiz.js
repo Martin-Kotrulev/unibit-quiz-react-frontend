@@ -5,6 +5,7 @@ import QuizForm from '../quizzes/QuizForm'
 import quizActions from '../../actions/QuizActions'
 import quizStore from '../../stores/QuizStore'
 import FormHelper from '../common/FormHelper'
+import Auth from '../../Auth'
 
 export default class Quiz extends Component {
   constructor (props) {
@@ -16,6 +17,7 @@ export default class Quiz extends Component {
       questions: [],
       quizId,
       quiz,
+      userOwnQuiz: Auth.getUserId() === quiz.creatorId,
       error: '',
       questionError: '',
       answerError: '',
@@ -23,7 +25,7 @@ export default class Quiz extends Component {
       endMoment: null,
       newQuestion: {
         value: '',
-        isMultiselect: 'false',
+        isMultiselect: false,
         quizId: '',
         answers: []
       }
@@ -108,15 +110,38 @@ export default class Quiz extends Component {
     })
   }
 
-  onAnswerChange (questionId, answerId, event) {
-    console.log(questionId)
-    console.log(answerId)
-    console.log(event)
+  changeAnswerState (answer, boolState) {
+    if (this.state.userOwnQuiz) {
+      answer.isRight = boolState
+    } else {
+      answer.isChecked = boolState
+    }
+  }
+
+  onAnswerChange (questionIndex, answerIndex, event) {
+    let question = this.state.questions[questionIndex]
+
+    if (!question.isMultiselect) {
+      question.answers.forEach(a => {
+        this.changeAnswerState(a, false)
+      })
+    }
+
+    this.changeAnswerState(question.answers[answerIndex],
+      event.target.checked)
+
+    console.log(this.state.questions[questionIndex].answers)
   }
 
   onAddAnswer (answer, questionIndex) {
-    console.log(answer)
-    console.log(questionIndex)
+    let {questions} = this.state
+
+    let letter = 'a'.charCodeAt(0) + questions[questionIndex].answers.length
+    answer.letter = String.fromCharCode(letter)
+
+    questions[questionIndex].answers.push(answer)
+
+    this.setState({questions})
   }
 
   onStartDateChange (startMoment) {
@@ -144,6 +169,7 @@ export default class Quiz extends Component {
         {this.state.quiz
           ? <QuizForm
             error={this.state.error}
+            userOwnQuiz={this.state.userOwnQuiz}
             questionError={this.state.questionError}
             answerError={this.state.questionError}
             quiz={this.state.quiz}
