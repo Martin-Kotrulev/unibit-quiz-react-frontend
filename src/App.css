@@ -132,6 +132,7 @@ a.show-more {
   margin-bottom: 2em;
   margin-top: 2em;
   text-align: center;
+  display: block;
 }
 
 .list-group-item-heading, a.show-more:hover, .created, .by, .tags {

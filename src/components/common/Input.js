@@ -22,20 +22,19 @@ const Input = (props) => {
   } else {
     component = isRadio ? (
       <Radio
+        defaultChecked={props.checked}
         disabled={props.disabled}
         type={type}
         name={props.name}
         inline={props.inline}
-        value={props.value}
         id={props.id}
         onChange={props.onChange} >{props.label}</Radio>)
       : (
         <Checkbox
+          defaultChecked={props.checked}
           disabled={props.disabled}
           type={type}
           name={props.name}
-          inline={props.inline}
-          value={props.value}
           id={props.id}
           onChange={props.onChange} >{props.label}</Checkbox>)
   }

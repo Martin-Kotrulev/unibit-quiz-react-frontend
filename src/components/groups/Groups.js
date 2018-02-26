@@ -27,7 +27,7 @@ export default class Groups extends Component {
       groups: [],
       page: 2,
       hasMore: false,
-      fetchMore: true,
+      fetchMore: false,
       search: '',
       error: ''
     }
@@ -115,22 +115,17 @@ export default class Groups extends Component {
 
   handleFetchedGroups (fetchedGroups) {
     let hasMore
-    if (fetchedGroups) {
+    if (fetchedGroups.length === 10) {
       hasMore = true
-      if (this.state.fetchMore) {
-        this.setState(prevState => {
-          return { groups: [...prevState.groups, ...fetchedGroups] }
-        })
-      } else {
-        this.setState({ groups: fetchedGroups })
-      }
     }
 
-    if (!fetchedGroups || fetchedGroups.length < 10) {
-      hasMore = false
+    if (this.state.fetchMore) {
+      this.setState(prevState => {
+        return { groups: [...prevState.groups, ...fetchedGroups], hasMore }
+      })
+    } else {
+      this.setState({ groups: fetchedGroups, hasMore })
     }
-
-    this.setState({ hasMore })
   }
 
   createGroup (event) {
@@ -184,11 +179,6 @@ export default class Groups extends Component {
     }
 
     groupActions.all(search)
-    this.setState({
-      groups: [],
-      page: 2,
-      hasMore: true
-    })
   }
 
   handleSearchChange (event) {
@@ -215,18 +205,14 @@ export default class Groups extends Component {
             onChange={this.handleSearchChange.bind(this)} />
           : null
         }
-        <Col className='groups-list'>
-          <GroupsList
-            all={this.state.all}
-            groups={this.state.groups}
-            onGroupClick={this.handleGroupClick.bind(this)}
-            onDeleteClick={this.handleDeleteClick.bind(this)} />
-        </Col>
-        <Col xs={12}>
-          <ShowMore
-            hasMore={this.state.hasMore}
-            onShowMore={this.showMoreResults.bind(this)} />
-        </Col>
+        <GroupsList
+          all={this.state.all}
+          groups={this.state.groups}
+          onGroupClick={this.handleGroupClick.bind(this)}
+          onDeleteClick={this.handleDeleteClick.bind(this)} />
+        <ShowMore
+          hasMore={this.state.hasMore}
+          onShowMore={this.showMoreResults.bind(this)} />
       </Col>
     )
   }

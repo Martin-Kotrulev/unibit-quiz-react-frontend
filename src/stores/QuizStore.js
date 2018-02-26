@@ -41,7 +41,7 @@ class QuizStore extends EventEmitter {
 
   updateQuizQuestions ({ quizId, questions }) {
     QuizData.updateQuizQuestions(quizId, questions)
-      .than(data => this.emit(this.eventTypes.QUESTIONS_UPDATED, data))
+      .then(data => this.emit(this.eventTypes.QUESTIONS_UPDATED, data))
   }
 
   handleAction (action) {

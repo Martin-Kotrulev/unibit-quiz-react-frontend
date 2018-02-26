@@ -11,12 +11,13 @@ export default props => {
       let tags = g.tags.map(t => '#'.concat(t)).join(' ')
       let id = g.id
       let name = g.name
-      let showDelete = g.creatorId === userId
-      let itemCols = showDelete ? 8 : 10
+      let own = g.creatorId === userId
+      let itemCols = own ? 8 : 12
+      let smItemCols = itemCols - 4
 
       return (
         <Col key={id} className='group-item'>
-          <Col xs={itemCols} xsOffset={0} smOffset={1}>
+          <Col xs={itemCols} xsOffset={0} sm={own ? itemCols - 2 : smItemCols} smOffset={2}>
             <ListGroupItem
               header={g.name}
               onClick={e => props.onGroupClick(id, name)}>
@@ -25,7 +26,7 @@ export default props => {
                 Tags: <span className='tags'>{tags}</span>
             </ListGroupItem>
           </Col>
-          {showDelete
+          {own
             ? <Col xs={2} smPull={0}>
               <Button
                 bsStyle='danger'

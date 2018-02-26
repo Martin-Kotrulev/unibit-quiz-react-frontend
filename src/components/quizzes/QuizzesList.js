@@ -59,11 +59,9 @@ export default props => {
     })
 
     return (
-      <Col xs={12} >
-        <ListGroup>
-          {renderQuizzes}
-        </ListGroup>
-      </Col>
+      <ListGroup>
+        {renderQuizzes}
+      </ListGroup>
     )
   }
 }

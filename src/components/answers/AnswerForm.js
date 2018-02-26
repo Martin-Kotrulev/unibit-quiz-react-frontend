@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Col, Button, Label } from 'react-bootstrap'
+import { Col, Button, Label, Form, FormGroup, Glyphicon } from 'react-bootstrap'
 
 import Input from '../common/Input'
 import FormHelper from '../common/FormHelper'
@@ -34,23 +34,25 @@ export default class AnswerForm extends Component {
 
   render () {
     return (
-      <div>
-        <Col xs={12} className='question-input'>
-          {this.state.error ? <h4><Label bsStyle='danger'> {this.state.error} </Label></h4> : null}
-          <Input
-            placeholder='Add Answer For The Question'
-            type='text'
-            name='value'
-            value={this.state.answer.value}
-            onChange={this.onAnswerChange.bind(this)} />
-        </Col>
-        <Col xs={6}>
-          <Button
-            className='pull-right'
-            bsStyle='primary'
-            onClick={this.onAddAnswer.bind(this)}>Add Answer</Button>
-        </Col>
-      </div>
+      <Form horizontal>
+        {this.state.error ? <h4><Label bsStyle='danger'> {this.state.error} </Label></h4> : null}
+        <FormGroup>
+          <Col xs={10}>
+            <Input
+              placeholder='Add Answer For The Question'
+              type='text'
+              name='value'
+              value={this.state.answer.value}
+              onChange={this.onAnswerChange.bind(this)} />
+          </Col>
+          <Col xs={2}>
+            <Button
+              className='pull-right'
+              bsStyle='primary'
+              onClick={this.onAddAnswer.bind(this)}><Glyphicon glyph="plus" /></Button>
+          </Col>
+        </FormGroup>
+      </Form>
     )
   }
 }

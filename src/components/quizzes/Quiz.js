@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
+import { Label } from 'react-bootstrap'
 import toastr from 'toastr'
 
 import QuizForm from '../quizzes/QuizForm'
 import quizActions from '../../actions/QuizActions'
 import quizStore from '../../stores/QuizStore'
 import FormHelper from '../common/FormHelper'
+import ResponseHelper from '../common/ResponseHelper'
 import Auth from '../../Auth'
 
 export default class Quiz extends Component {
@@ -30,6 +32,19 @@ export default class Quiz extends Component {
         answers: []
       }
     }
+
+    this.handleUpdatedQuestions = this.handleUpdatedQuestions.bind(this)
+    this.handleFetchedQuestions = this.handleFetchedQuestions.bind(this)
+
+    quizStore.on(
+      quizStore.eventTypes.QUESTIONS_UPDATED,
+      this.handleUpdatedQuestions
+    )
+
+    quizStore.on(
+      quizStore.eventTypes.ALL_QUESTIONS_FOR_QUIZ_FETCHED,
+      this.handleFetchedQuestions
+    )
   }
 
   componentWillMount () {
@@ -43,14 +58,33 @@ export default class Quiz extends Component {
           quiz[quizProp] = ''
         }
       }
+
+      quizActions.allQuestionsForQuiz(quiz.id)
     }
   }
 
   componentWillUnmount () {
+    quizStore.removeListener(
+      quizStore.eventTypes.QUESTIONS_UPDATED,
+      this.handleUpdatedQuestions
+    )
 
+    quizStore.removeListener(
+      quizStore.eventTypes.ALL_QUESTIONS_FOR_QUIZ_FETCHED,
+      this.handleFetchedQuestions
+    )
   }
 
-  publishQuiz () {
+  handleUpdatedQuestions (response) {
+    ResponseHelper.handleResponse.call(this, response)
+    console.log(response)
+  }
+
+  handleFetchedQuestions ({quiz, questions}) {
+    this.setState({quiz, questions})
+  }
+
+  onPublishQuiz () {
     console.log('publish')
     let {error, quiz, startMoment, endMoment} = this.state
 
@@ -72,8 +106,9 @@ export default class Quiz extends Component {
     this.setState({error})
   }
 
-  saveQuestions () {
-
+  onSaveQuestions () {
+    console.log(this.state.questions)
+    quizActions.updateQuizQuestions(this.state.quizId, this.state.questions)
   }
 
   onQuizChange (event) {
@@ -102,7 +137,7 @@ export default class Quiz extends Component {
         questionError,
         newQuestion: {
           value: '',
-          isMultiselect: 'false',
+          isMultiselect: false,
           quizId: '',
           answers: []
         }
@@ -180,8 +215,8 @@ export default class Quiz extends Component {
             onAnswerChange={this.onAnswerChange.bind(this)}
             onAddAnswer={this.onAddAnswer.bind(this)}
             onChange={this.onQuizChange.bind(this)}
-            onPublish={this.publishQuiz.bind(this)}
-            onSave={this.saveQuestions.bind(this)}
+            onPublish={this.onPublishQuiz.bind(this)}
+            onSave={this.onSaveQuestions.bind(this)}
             onStartDateChange={this.onStartDateChange.bind(this)}
             onEndDateChange={this.onEndDateChange.bind(this)} />
           : null }

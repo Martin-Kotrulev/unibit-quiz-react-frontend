@@ -40,7 +40,7 @@ export default class Quizzes extends Component {
       quizzes: [],
       page: 2,
       hasMore: false,
-      fetchMore: true,
+      fetchMore: false,
       error: ''
     }
 
@@ -171,7 +171,6 @@ export default class Quizzes extends Component {
           },
           page: 2,
           error: '',
-          fetchMore: false,
           quizzes: [response.result, ...prevState.quizzes]
         }
       })
@@ -180,25 +179,25 @@ export default class Quizzes extends Component {
 
   handleFetchedQuizzes (response) {
     let hasMore = false
-    let fetchedQuizzes = response.result || response
+    let fetchedQuizzes = response.result || response.quizzes || response
     let mine = (response.group &&
       response.group.creatorId === Auth.getUserId()) ||
       this.state.mine
 
     this.setState({ mine, all: !mine, group: response.group })
 
-    if (fetchedQuizzes) {
-      if (fetchedQuizzes.length === 10) {
-        hasMore = true
-      }
+    console.log(fetchedQuizzes)
 
-      if (this.state.fetchMore) {
-        this.setState(prevState => {
-          return { quizzes: [...prevState.quizzes, ...fetchedQuizzes], hasMore }
-        })
-      } else {
-        this.setState({ quizzes: fetchedQuizzes, hasMore })
-      }
+    if (fetchedQuizzes.length === 10) {
+      hasMore = true
+    }
+
+    if (this.state.fetchMore) {
+      this.setState(prevState => {
+        return { quizzes: [...prevState.quizzes, ...fetchedQuizzes], hasMore }
+      })
+    } else {
+      this.setState({ quizzes: fetchedQuizzes, hasMore })
     }
   }
 
@@ -227,7 +226,6 @@ export default class Quizzes extends Component {
 
   onCreateQuizChange (event) {
     FormHelper.handleFormChange.call(this, event, 'quiz')
-    console.log(this.state.quiz.locked)
   }
 
   showMoreResults () {
@@ -279,11 +277,6 @@ export default class Quizzes extends Component {
     }
 
     quizActions.all(search)
-    this.setState({
-      quizzes: [],
-      page: 2,
-      hasMore: true
-    })
   }
 
   handleSearchChange (event) {
@@ -311,13 +304,11 @@ export default class Quizzes extends Component {
             onChange={this.handleSearchChange.bind(this)} />
           : null
         }
-        <Col xs={12} className='quizzes-list'>
-          <QuizzesList
-            onEditClick={this.handleEditClick.bind(this)}
-            quizzes={this.state.quizzes}
-            onQuizClick={this.handleQuizClick.bind(this)}
-            onDeleteClick={this.handleDeleteClick.bind(this)} />
-        </Col>
+        <QuizzesList
+          onEditClick={this.handleEditClick.bind(this)}
+          quizzes={this.state.quizzes}
+          onQuizClick={this.handleQuizClick.bind(this)}
+          onDeleteClick={this.handleDeleteClick.bind(this)} />
         <ShowMore
           hasMore={this.state.hasMore}
           onShowMore={this.showMoreResults.bind(this)} />

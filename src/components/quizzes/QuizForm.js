@@ -10,12 +10,11 @@ export default props => {
   const questions = props.questions.map((q, qi) => {
     const answers = q.answers.map((a, ai) => (
       <div key={a.id || ai}>
-        <span className='answer-letter'>{a.letter}. </span>
         <Input
           name={props.userOwnQuiz ? 'isRight' : 'isChecked'}
           type={q.isMultiselect ? 'checkbox' : 'radio'}
-          value={props.userOwnQuiz ? a.isChecked : a.isRight}
-          label={a.value}
+          checked={props.userOwnQuiz ? a.isRight : a.isChecked}
+          label={`${a.letter}) ${a.value}`}
           onChange={(e) => props.onAnswerChange(qi, ai, e)} />
       </div>
     ))
@@ -64,8 +63,9 @@ export default props => {
       <Col xs={6}>
         <Input
           inline
+          checked={props.newQuestion.isMultiselect}
           onChange={props.onNewQuestionChange}
-          value={props.newQuestion.isMultiselec}
+          name='isMultiselect'
           type='checkbox'
           label='Multiselect' />
       </Col>
