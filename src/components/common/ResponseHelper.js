@@ -24,6 +24,10 @@ export default class ResponseHelper {
         }
       }
 
+      if (this.state.error) {
+        this.setState({error: ''})
+      }
+
       if (redirectPath) {
         this.props.history.push(redirectPath)
       }

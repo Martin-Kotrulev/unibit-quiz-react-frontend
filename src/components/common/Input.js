@@ -10,8 +10,8 @@ const Input = (props) => {
   if (!isRadioOrCheck) {
     component = (
       <FormControl
-        disabled={props.disabled}
         className={props.className}
+        disabled={props.disabled}
         type={type}
         name={props.name}
         placeholder={props.placeholder}
@@ -40,19 +40,19 @@ const Input = (props) => {
   }
 
   if (props.inlineLabel) {
-    component = <Col sm={10}>{component}</Col>
+    component = <Col xs={10}>{component}</Col>
   }
 
-  let label = <label htmlFor={props.name}>{props.label}:</label>
+  let label = <label htmlFor={props.name}>{props.label}</label>
 
   if (props.inlineLabel) {
-    label = <Col sm={2}>{label}</Col>
+    label = <Col xs={2}><ControlLabel>{props.label}</ControlLabel></Col>
   }
 
   return (
     <FormGroup>
       {props.label && !isRadioOrCheck
-      ? <ControlLabel>{props.label}</ControlLabel>
+      ? label
       : null}
       {component}
     </FormGroup>

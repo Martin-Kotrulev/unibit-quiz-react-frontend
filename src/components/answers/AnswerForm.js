@@ -15,7 +15,15 @@ export default class AnswerForm extends Component {
   }
 
   onAddAnswer () {
-    // validateion
+    if (!this.state.answer.weight) {
+      this.state.answer.weight = 1
+    }
+
+    if (!this.state.answer.value) {
+      this.setState({ error: 'Answer cannot be empty'})
+      return
+    }
+
     this.props.onAddAnswer(this.state.answer, this.props.questionIndex);
 
     this.setState({
@@ -29,7 +37,11 @@ export default class AnswerForm extends Component {
   }
 
   onAnswerChange (event) {
-    FormHelper.handleFormChange.call(this, event, 'answer')
+    if (event.target.name === 'weight') {
+      FormHelper.handleNumericFormChange.call(this, event, 'answer', 1, 10)
+    } else {
+      FormHelper.handleFormChange.call(this, event, 'answer')
+    }
   }
 
   render () {
@@ -37,7 +49,7 @@ export default class AnswerForm extends Component {
       <Form horizontal>
         {this.state.error ? <h4><Label bsStyle='danger'> {this.state.error} </Label></h4> : null}
         <FormGroup>
-          <Col xs={10}>
+          <Col xs={9}>
             <Input
               placeholder='Add Answer For The Question'
               type='text'
@@ -45,9 +57,16 @@ export default class AnswerForm extends Component {
               value={this.state.answer.value}
               onChange={this.onAnswerChange.bind(this)} />
           </Col>
-          <Col xs={2}>
+          <Col xs={1}>
+          <label className='weight-label'>Weight</label>
+            <Input
+              className='answer-weight-input'
+              name='weight'
+              value={this.state.answer.weight}
+              onChange={this.onAnswerChange.bind(this)}/>
+          </Col>
+          <Col xs={1}>
             <Button
-              className='pull-right'
               bsStyle='primary'
               onClick={this.onAddAnswer.bind(this)}><Glyphicon glyph="plus" /></Button>
           </Col>

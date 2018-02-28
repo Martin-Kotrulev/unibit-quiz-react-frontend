@@ -107,7 +107,6 @@ export default class Quiz extends Component {
   }
 
   onSaveQuestions () {
-    console.log(this.state.questions)
     quizActions.updateQuizQuestions(this.state.quizId, this.state.questions)
   }
 
@@ -143,6 +142,12 @@ export default class Quiz extends Component {
         }
       }
     })
+  }
+
+  onDeleteQuestion (questionIndex) {
+    let {questions} = this.state
+    questions.splice(questionIndex, 1)
+    this.setState({questions})
   }
 
   changeAnswerState (answer, boolState) {
@@ -211,6 +216,7 @@ export default class Quiz extends Component {
             newQuestion={this.state.newQuestion}
             questions={this.state.questions}
             onAddQuestion={this.onAddQuestion.bind(this)}
+            onDeleteQuestion={this.onDeleteQuestion.bind(this)}
             onNewQuestionChange={this.onNewQuestionChange.bind(this)}
             onAnswerChange={this.onAnswerChange.bind(this)}
             onAddAnswer={this.onAddAnswer.bind(this)}

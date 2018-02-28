@@ -86,6 +86,10 @@ button.navbar-toggle {
   font-family: CabinSketch-Bold;
 }
 
+.question-h {
+  display: inline;
+}
+
 .home h1 {
   font-size: 5em;
   font-family: Frijole-Regular;
@@ -206,4 +210,44 @@ button[type='submit'] {
   padding-top: 1rem;
   margin-top: 1rem;
   border-top: 0.1rem solid white;
+}
+
+.remove-button {
+  display: inline;
+  color: red;
+  margin: 0 10px;
+}
+
+.remove-button .glyphicon {
+  color: red;
+  font-size: 1.5em;
+}
+
+.remove-button .glyphicon:hover {
+  color: lightcoral;
+}
+
+.answer-input {
+  display: inline-block;
+  margin-bottom: 0;
+}
+
+.remove-button.answer-remove .glyphicon {
+  font-size: 1em !important;
+  top: 1em;
+}
+
+.answer-text-input {
+  width: 75%;
+  display: inline-block;
+}
+
+.answer-weight-input {
+  margin: 0 8px;
+}
+
+.weight-label {
+  position: absolute;
+  top: 31px;
+  left: 9px;
 }
