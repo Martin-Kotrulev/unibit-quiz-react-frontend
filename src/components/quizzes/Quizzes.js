@@ -41,13 +41,15 @@ export default class Quizzes extends Component {
       page: 2,
       hasMore: false,
       fetchMore: false,
-      error: ''
+      error: '',
+      enterQuiz: null
     }
 
     this.handleFetchedQuizzes = this.handleFetchedQuizzes.bind(this)
     this.handleQuizAdding = this.handleQuizAdding.bind(this)
     this.handleQuizDeletion = this.handleQuizDeletion.bind(this)
     this.handleQuizEntrance = this.handleQuizEntrance.bind(this)
+    this.fetchQuizzes = this.fetchQuizzes.bind(this)
 
     quizStore.on(
       quizStore.eventTypes.QUIZ_ADDED,
@@ -81,13 +83,12 @@ export default class Quizzes extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    console.log(this.props)
     console.log('props', nextProps)
     let groupId = nextProps.match.params.groupId
     let mine = nextProps.match.path.endsWith('mine')
     let all = !mine
     let query = queryString.parse(nextProps.location.search)
-
-    console.log('mine', mine)
 
     this.setState({
       groupId,
@@ -130,6 +131,10 @@ export default class Quizzes extends Component {
   }
 
   componentWillMount () {
+    this.fetchQuizzes()
+  }
+
+  fetchQuizzes () {
     if (this.state.groupId) {
       groupActions.allQuizzes(this.state.groupId)
     } else if (this.state.mine) {
@@ -143,6 +148,11 @@ export default class Quizzes extends Component {
     console.log(response)
     if (response.success) {
       toastr.success(response.message)
+      console.log(this.state.enterQuiz)
+      this.props.history.push({
+        pathname: `/quizzes/${this.state.enterQuiz.id}`,
+        state: {quiz: this.state.enterQuiz}
+      })
     } else {
       toastr.error(response.message)
     }
@@ -250,6 +260,7 @@ export default class Quizzes extends Component {
 
       if (enter) {
         quizActions.enterQuiz(quiz.id)
+        this.setState({enterQuiz: quiz})
       }
     }
   }
