@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { Label } from 'react-bootstrap'
-import toastr from 'toastr'
 
 import QuizForm from '../quizzes/QuizForm'
 import quizActions from '../../actions/QuizActions'
@@ -77,7 +75,9 @@ export default class Quiz extends Component {
 
   handleUpdatedQuestions (response) {
     ResponseHelper.handleResponse.call(this, response)
-    console.log(response)
+    if (response.success) {
+      this.setState({questions: response.result})
+    }
   }
 
   handleFetchedQuestions ({quiz, questions}) {
@@ -184,6 +184,12 @@ export default class Quiz extends Component {
     this.setState({questions})
   }
 
+  onDeleteAnswer (questionIndex, answerIndex) {
+    let {questions} = this.state
+    questions[questionIndex].answers.splice(answerIndex, 1)
+    this.setState({questions})
+  }
+
   onStartDateChange (startMoment) {
     if (typeof momentObject !== 'string') {
       let { quiz } = this.state
@@ -220,6 +226,7 @@ export default class Quiz extends Component {
             onNewQuestionChange={this.onNewQuestionChange.bind(this)}
             onAnswerChange={this.onAnswerChange.bind(this)}
             onAddAnswer={this.onAddAnswer.bind(this)}
+            onDeleteAnswer={this.onDeleteAnswer.bind(this)}
             onChange={this.onQuizChange.bind(this)}
             onPublish={this.onPublishQuiz.bind(this)}
             onSave={this.onSaveQuestions.bind(this)}

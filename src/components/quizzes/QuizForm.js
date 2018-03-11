@@ -10,11 +10,13 @@ export default props => {
   const questions = props.questions.map((q, qi) => {
     const answers = q.answers.map((a, ai) => (
       <div key={a.id || ai}>
-        <Col xs={1}>
+        {props.userOwnQuiz
+        ? <Col xs={1}>
           <a className='remove-button answer-remove' onClick={() => props.onDeleteAnswer(qi, ai)}>
             <Glyphicon glyph='remove' />
           </a>
         </Col>
+        : null}
         <Col xs={11}>
           <Input
             className='answer-input'
@@ -29,12 +31,16 @@ export default props => {
 
     return (
       <Col xs={10} xsOffset={1} key={q.id || qi}>
-        <a className='remove-button' onClick={() => props.onDeleteQuestion(qi)}>
+        {props.userOwnQuiz
+        ? <a className='remove-button' onClick={() => props.onDeleteQuestion(qi)}>
           <Glyphicon glyph='remove' />
         </a>
+        : null}
         <h3 className='question-h' key={q.id || qi}>{qi + 1}. {q.value}</h3>
         {answers}
-        <AnswerForm onAddAnswer={props.onAddAnswer} questionIndex={qi} />
+        {props.userOwnQuiz
+        ? <AnswerForm onAddAnswer={props.onAddAnswer} questionIndex={qi} />
+        : null}
       </Col>
     )
   })
@@ -42,44 +48,64 @@ export default props => {
   return (
     <Col xs={12} sm={8} smOffset={2}>
       {props.error ? <h4><Label bsStyle='danger'> {props.error} </Label></h4> : null}
-      <Col xs={6}>
-        <Button
-          className='pull-right'
-          bsStyle='primary'
-          onClick={props.onSave}>Save Questions</Button>
-      </Col>
-      <Col xs={6}>
-        {!props.quiz.published
-       ? <Button bsStyle='success' onClick={props.onPublish}>
-           Publish Quiz
-         </Button>
-       : null}
-      </Col>
+      {!props.quiz.published && props.userOwnQuiz
+      ? <div>
+        <Col xs={6}>
+          <Button
+            className='pull-right'
+            bsStyle='primary'
+            onClick={props.onSave}>Save Questions</Button>
+        </Col>
+        <Col xs={6}>
+          <Button bsStyle='success' onClick={props.onPublish}>
+            Publish Quiz
+          </Button>
+        </Col>
+      </div>
+      : null}
+      {!props.userOwnQuiz
+        ? <div className='text-center'>
+          <Button
+            bsStyle='primary'
+            onClick={props.onFinishQuiz}>Finish Quiz</Button>
+        </div>
+        : null}
       {questions}
-      <Col xs={12} className='question-input'>
-        {props.questionError ? <h4><Label bsStyle='danger'> {props.questionError} </Label></h4> : null}
-        <Input
-          placeholder='Enter Your New Question'
-          type='text'
-          name='value'
-          value={props.newQuestion.value}
-          onChange={props.onNewQuestionChange} />
-      </Col>
-      <Col xs={6}>
+      {props.userOwnQuiz
+      ? <div>
+        <Col xs={12} className='question-input'>
+          {props.questionError ? <h4><Label bsStyle='danger'> {props.questionError} </Label></h4> : null}
+          <Input
+            placeholder='Enter Your New Question'
+            type='text'
+            name='value'
+            value={props.newQuestion.value}
+            onChange={props.onNewQuestionChange} />
+        </Col>
+        <Col xs={6}>
+          <Button
+            className='pull-right'
+            bsStyle='primary'
+            onClick={props.onAddQuestion}>Add Question</Button>
+        </Col>
+        <Col xs={6}>
+          <Input
+            inline
+            checked={props.newQuestion.isMultiselect}
+            onChange={props.onNewQuestionChange}
+            name='isMultiselect'
+            type='checkbox'
+            label='Multiselect' />
+        </Col>
+      </div>
+      : null}
+      {!props.userOwnQuiz
+      ? <div className='text-center'>
         <Button
-          className='pull-right'
           bsStyle='primary'
-          onClick={props.onAddQuestion}>Add Question</Button>
-      </Col>
-      <Col xs={6}>
-        <Input
-          inline
-          checked={props.newQuestion.isMultiselect}
-          onChange={props.onNewQuestionChange}
-          name='isMultiselect'
-          type='checkbox'
-          label='Multiselect' />
-      </Col>
+          onClick={props.onFinishQuiz}>Finish Quiz</Button>
+      </div>
+      : null}
     </Col>
   )
 }
