@@ -28,7 +28,7 @@ const Input = (props) => {
         name={props.name}
         inline={props.inline}
         id={props.id}
-        onChange={props.onChange} >{props.label}</Radio>)
+        onClick={props.onClick} >{props.label}</Radio>)
       : (
         <Checkbox
           defaultChecked={props.checked}
@@ -36,7 +36,7 @@ const Input = (props) => {
           type={type}
           name={props.name}
           id={props.id}
-          onChange={props.onChange} >{props.label}</Checkbox>)
+          onClick={props.onClick} >{props.label}</Checkbox>)
   }
 
   if (props.inlineLabel) {

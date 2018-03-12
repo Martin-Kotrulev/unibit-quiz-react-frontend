@@ -173,6 +173,8 @@ export default class Groups extends Component {
   }
 
   searchGroups () {
+    this.setState({fetchMore: false})
+
     let search = this.state.search
     if (this.state.search.indexOf('#') > -1) {
       search = this.state.search.replace(/#/g, '*')

@@ -44,6 +44,11 @@ class QuizStore extends EventEmitter {
       .then(data => this.emit(this.eventTypes.QUESTIONS_UPDATED, data))
   }
 
+  scoreUser (quizId) {
+    QuizData.scoreUser(quizId)
+      .then(data => this.emit(this.eventTypes.USER_SCORED, data))
+  }
+
   handleAction (action) {
     switch (action.type) {
       case quizActions.types.ADD_QUIZ:
@@ -70,6 +75,9 @@ class QuizStore extends EventEmitter {
       case quizActions.types.UPDATE_QUIZ_QUESTIONS:
         this.updateQuizQuestions(action.payload)
         break
+      case quizActions.types.SCORE_USER:
+        this.scoreUser(action.payload)
+        break
       default:
         break
     }
@@ -86,7 +94,8 @@ quizStore.eventTypes = {
   ALL_FETCHED: 'ALL_FETCHED',
   MINE_FETCHED: 'MINE_FETCHED',
   ALL_QUESTIONS_FOR_QUIZ_FETCHED: 'ALL_QUESTIONS_FOR_QUIZ_FETCHED',
-  QUESTIONS_UPDATED: 'QUESTIONS_UPDATED'
+  QUESTIONS_UPDATED: 'QUESTIONS_UPDATED',
+  USER_SCORED: 'USER_SCORED'
 }
 
 Dispatcher.register(quizStore.handleAction.bind(quizStore))

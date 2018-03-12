@@ -24,7 +24,7 @@ export default props => {
             type={q.isMultiselect ? 'checkbox' : 'radio'}
             checked={props.userOwnQuiz ? a.isRight : a.isChecked}
             label={`${a.letter}) ${a.value}`}
-            onChange={(e) => props.onAnswerChange(qi, ai, e)} />
+            onClick={(e) => props.onAnswerChange(qi, ai, e)} />
         </Col>
       </div>
     ))
@@ -63,14 +63,14 @@ export default props => {
         </Col>
       </div>
       : null}
-      {!props.userOwnQuiz
+      {!props.userOwnQuiz && !props.score
         ? <div className='text-center'>
           <Button
             bsStyle='primary'
             onClick={props.onFinishQuiz}>Finish Quiz</Button>
         </div>
         : null}
-      {questions}
+      {props.userOwnQuiz || !props.score ? questions : null}
       {props.userOwnQuiz
       ? <div>
         <Col xs={12} className='question-input'>
@@ -99,12 +99,18 @@ export default props => {
         </Col>
       </div>
       : null}
-      {!props.userOwnQuiz
+      {!props.userOwnQuiz && !props.score
       ? <div className='text-center'>
         <Button
           bsStyle='primary'
-          onClick={props.onFinishQuiz}>Finish Quiz</Button>
+          onClick={() => props.onFinishQuiz()}>Finish Quiz</Button>
       </div>
+      : null}
+      {props.score
+      ? <Col className='score-labels'>
+        <h2 className='center-h'>Quiz Finished!</h2>
+        <h1 className='center-h'>Your Score: <span className='score'>{props.score.value}</span></h1>
+      </Col>
       : null}
     </Col>
   )

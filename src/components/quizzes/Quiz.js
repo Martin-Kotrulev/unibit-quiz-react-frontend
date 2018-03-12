@@ -28,11 +28,13 @@ export default class Quiz extends Component {
         isMultiselect: false,
         quizId: '',
         answers: []
-      }
+      },
+      score: null
     }
 
     this.handleUpdatedQuestions = this.handleUpdatedQuestions.bind(this)
     this.handleFetchedQuestions = this.handleFetchedQuestions.bind(this)
+    this.handleUserScore = this.handleUserScore.bind(this)
 
     quizStore.on(
       quizStore.eventTypes.QUESTIONS_UPDATED,
@@ -42,6 +44,11 @@ export default class Quiz extends Component {
     quizStore.on(
       quizStore.eventTypes.ALL_QUESTIONS_FOR_QUIZ_FETCHED,
       this.handleFetchedQuestions
+    )
+
+    quizStore.on(
+      quizStore.eventTypes.USER_SCORED,
+      this.handleUserScore
     )
   }
 
@@ -71,6 +78,11 @@ export default class Quiz extends Component {
       quizStore.eventTypes.ALL_QUESTIONS_FOR_QUIZ_FETCHED,
       this.handleFetchedQuestions
     )
+
+    quizStore.removeListener(
+      quizStore.eventTypes.USER_SCORED,
+      this.handleUserScore
+    )
   }
 
   handleUpdatedQuestions (response) {
@@ -82,6 +94,11 @@ export default class Quiz extends Component {
 
   handleFetchedQuestions ({quiz, questions}) {
     this.setState({quiz, questions})
+  }
+
+  handleUserScore (score) {
+    console.log(score)
+    this.setState({score})
   }
 
   onPublishQuiz () {
@@ -170,7 +187,22 @@ export default class Quiz extends Component {
     this.changeAnswerState(question.answers[answerIndex],
       event.target.checked)
 
-    console.log(this.state.questions[questionIndex].answers)
+    if (!this.state.userOwnQuiz) {
+      let questionId = question.id
+      let answerId = this.state.questions[questionIndex].answers[answerIndex].id
+      let progressAnswer = {
+        answerId,
+        isChecked: event.target.checked
+      }
+
+      quizActions.addProgress(this.state.quizId, questionId, progressAnswer)
+    }
+
+    console.log('check', this.state.questions[questionIndex].answers)
+  }
+
+  onFinishQuiz () {
+    quizActions.scoreUser(this.state.quizId)
   }
 
   onAddAnswer (answer, questionIndex) {
@@ -227,11 +259,13 @@ export default class Quiz extends Component {
             onAnswerChange={this.onAnswerChange.bind(this)}
             onAddAnswer={this.onAddAnswer.bind(this)}
             onDeleteAnswer={this.onDeleteAnswer.bind(this)}
+            onFinishQuiz={this.onFinishQuiz.bind(this)}
             onChange={this.onQuizChange.bind(this)}
             onPublish={this.onPublishQuiz.bind(this)}
             onSave={this.onSaveQuestions.bind(this)}
             onStartDateChange={this.onStartDateChange.bind(this)}
-            onEndDateChange={this.onEndDateChange.bind(this)} />
+            onEndDateChange={this.onEndDateChange.bind(this)}
+            score={this.state.score} />
           : null }
       </div>
     )

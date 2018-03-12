@@ -251,3 +251,13 @@ button[type='submit'] {
   top: 31px;
   left: 9px;
 }
+
+.score-labels {
+  margin: 5em;
+}
+
+.score-labels h1 {
+  color: #D9B310!important;
+  font-size: 2em;
+  font-family: Frijole-Regular !important;
+}

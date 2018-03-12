@@ -9,7 +9,8 @@ const quizActions = {
     ALL: 'ALL',
     ALL_QUESTIONS_FOR_QUIZ: 'ALL_QUESTIONS_FOR_QUIZ',
     MINE: 'MINE',
-    UPDATE_QUIZ_QUESTIONS: 'UPDATE_QUIZ_QUESTIONS'
+    UPDATE_QUIZ_QUESTIONS: 'UPDATE_QUIZ_QUESTIONS',
+    SCORE_USER: 'SCORE_USER'
   },
   addQuiz (quiz) {
     Dispatcher.dispatch({
@@ -57,6 +58,12 @@ const quizActions = {
     Dispatcher.dispatch({
       type: this.types.UPDATE_QUIZ_QUESTIONS,
       payload: { quizId, questions }
+    })
+  },
+  scoreUser (quizId) {
+    Dispatcher.dispatch({
+      type: this.types.SCORE_USER,
+      payload: quizId
     })
   }
 }

@@ -16,7 +16,8 @@ class QuizData {
   }
 
   static addProgress (quizId, questionId, progressAnswer) {
-    return Http.post(`${baseUrl}/${quizId}/${questionId}`, progressAnswer, true)
+    console.log(quizId, questionId, progressAnswer)
+    return Http.post(`${baseUrl}/${quizId}/questions/${questionId}`, progressAnswer, true)
   }
 
   static all (search, page) {
@@ -37,8 +38,9 @@ class QuizData {
     return Http.get(`${baseUrl}/mine?page=${page}`, true)
   }
 
-  static score (quizId) {
-    return Http.post(`${baseUrl}/${quizId}score`)
+  static scoreUser (quizId) {
+    console.log('scoreUser', quizId)
+    return Http.post(`${baseUrl}/${quizId}/score`, null, true)
   }
 }
 
