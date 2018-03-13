@@ -1,7 +1,13 @@
 export default class FormHelper {
   static handleFormChange (event, stateField) {
     const target = event.target
-    const field = target.name
+    let field = target.name
+
+    if (field.startsWith('isChecked')) {
+      field = 'isChecked'
+    } else if (field.startsWith('isRight')) {
+      field = 'isRight'
+    }
 
     let value
     if (target.type === 'checkbox') {

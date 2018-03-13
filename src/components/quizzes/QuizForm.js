@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Button, Label, Glyphicon } from 'react-bootstrap'
+import { Col, Button, Label, Glyphicon, ButtonGroup } from 'react-bootstrap'
 
 import Input from '../common/Input'
 import AnswerForm from '../answers/AnswerForm'
@@ -20,7 +20,7 @@ export default props => {
         <Col xs={11}>
           <Input
             className='answer-input'
-            name={props.userOwnQuiz ? 'isRight' : 'isChecked'}
+            name={props.userOwnQuiz ? `isRight${q.id}` : `isChecked${q.id}`}
             type={q.isMultiselect ? 'checkbox' : 'radio'}
             checked={props.userOwnQuiz ? a.isRight : a.isChecked}
             label={`${a.letter}) ${a.value}`}
@@ -92,7 +92,7 @@ export default props => {
           <Input
             inline
             checked={props.newQuestion.isMultiselect}
-            onChange={props.onNewQuestionChange}
+            onClick={props.onNewQuestionChange}
             name='isMultiselect'
             type='checkbox'
             label='Multiselect' />
